@@ -1,0 +1,29 @@
+---
+const { home = false } = Astro.props;
+---
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>VITASPACE INC.</strong>
+      <p>
+        공공기관 · 기업 사무환경 컨설팅 및 가구 납품
+        {home && <><br />© 2026 VITASPACE. All rights reserved.</>}
+      </p>
+    </div>
+    {
+      home ? (
+        <a class="top" href="#">TOP ↑</a>
+      ) : (
+        <div class="footer-nav">
+          <a href="/">홈</a>
+          <a href="/process/">진행방식</a>
+          <a href="/projects/">납품사례</a>
+          <a href="/about/">회사소개</a>
+          <a href="/brands/">취급브랜드</a>
+          <a href="/contact/">상담신청</a>
+        </div>
+      )
+    }
+  </div>
+</footer>

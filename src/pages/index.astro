@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import ProcessStep from '../components/ProcessStep.astro';
+import '../styles/home.css';
+---
+
+<BaseLayout variant="home">
+  <section class="hero">
+    <div class="wrap hero-content">
+      <span class="eyebrow">Government · Public Institution · Enterprise</span>
+      <h1>공공의 공간을<br />더 나은 일터로.</h1>
+      <p>공간 분석과 3D 제안부터 규격 검토, 납품·설치까지. 비타스페이스가 기관의 목적과 예산에 맞는 사무환경을 설계합니다.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/contact/">프로젝트 상담하기 <span class="arrow">↗</span></a>
+        <a class="btn btn-ghost" href="/projects/">납품사례 보기</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>ONE-STOP</b><span>제안부터 설치까지</span></div>
+        <div class="stat"><b>MULTI-BRAND</b><span>예산·규격별 최적 구성</span></div>
+        <div class="stat"><b>3D PLANNING</b><span>도입 전 공간 검토</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section trust">
+    <div class="wrap">
+      <div class="trust-grid">
+        <div class="trust-title">
+          <span class="eyebrow">Public Procurement Ready</span>
+          <h2>기관 납품에 필요한<br />실무를 이해합니다.</h2>
+          <p>보여주기 위한 디자인보다 담당자가 안심할 수 있는 과정과 결과를 우선합니다.</p>
+        </div>
+        <div class="capabilities">
+          <article class="cap"><span class="num">01</span><h3>규격·예산 맞춤 제안</h3><p>요구 규격과 공간 조건을 검토하고 복수 브랜드 및 맞춤 제작을 조합합니다.</p></article>
+          <article class="cap"><span class="num">02</span><h3>3D 공간 시뮬레이션</h3><p>배치, 동선, 수용 인원을 도입 전에 시각적으로 확인할 수 있습니다.</p></article>
+          <article class="cap"><span class="num">03</span><h3>납품 서류 대응</h3><p>견적과 제품 사양, 납품 관련 증빙을 프로젝트 기준에 맞춰 준비합니다.</p></article>
+          <article class="cap"><span class="num">04</span><h3>설치·이전·폐기 통합</h3><p>현장 일정에 맞춘 반입과 설치부터 기존 집기 처리까지 한 번에 진행합니다.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section process" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">How We Work</span><h2>복잡한 프로젝트를<br />명확한 5단계로.</h2></div>
+        <p>기관 담당자와 현장 실무자가 같은 그림을 볼 수 있도록 각 단계별 산출물과 확인 사항을 명확히 공유합니다.</p>
+      </div>
+      <div class="steps">
+        <ProcessStep variant="compact" step="STEP 01" title="상담·요구사항" description="예산, 인원, 일정, 품목 파악" />
+        <ProcessStep variant="compact" step="STEP 02" title="현장 실측" description="공간 조건과 반입 동선 확인" />
+        <ProcessStep variant="compact" step="STEP 03" title="레이아웃·3D" description="배치안과 제품 조합 제안" />
+        <ProcessStep variant="compact" step="STEP 04" title="견적·발주" description="규격 확정 및 납품 일정 수립" />
+        <ProcessStep variant="compact" step="STEP 05" title="납품·사후관리" description="설치 검수와 유지관리 대응" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">Space Consulting</span><h2>도입 전에,<br />공간을 먼저 확인합니다.</h2></div>
+        <p>평면도만으로 이해하기 어려운 배치와 밀도를 3D로 확인하고, 담당자의 피드백을 반영해 최종안을 완성합니다.</p>
+      </div>
+      <div class="preview-grid">
+        <div class="render-card">
+          <span class="eyebrow">3D LAYOUT PREVIEW</span>
+          <div class="plan"><i class="desk"></i><i class="desk"></i><i class="desk"></i><i class="desk"></i><i class="desk"></i><i class="desk"></i><i class="desk"></i><i class="desk"></i></div>
+          <div class="render-label"><strong>업무공간 배치 예시</strong><span>좌석 · 동선 · 수납 · 협업공간 검토</span></div>
+        </div>
+        <div class="consult-card">
+          <span class="eyebrow">What We Check</span>
+          <h3>예쁜 배치보다<br />오래 편한 공간을 만듭니다.</h3>
+          <p>조직의 업무 방식과 향후 변화까지 고려해 면적을 효율적으로 사용합니다.</p>
+          <ul class="mini-list">
+            <li><i>01</i> 부서별 인원과 협업 빈도</li>
+            <li><i>02</i> 집중·회의·수납 공간의 균형</li>
+            <li><i>03</i> 전기·배선과 안전한 이동 동선</li>
+            <li><i>04</i> 추가 좌석과 조직 변화 대응</li>
+          </ul>
+          <a class="btn btn-primary" href="/contact/">도면으로 상담받기 <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cases" id="cases">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">Selected Projects</span><h2>납품사례</h2></div>
+        <p>기관명보다 중요한 것은 주어진 공간과 요구를 어떻게 해결했는지입니다. 프로젝트별 핵심 조건과 적용 제품을 함께 보여드립니다.</p>
+      </div>
+      <div class="case-grid">
+        <article class="case"><div><span>PUBLIC OFFICE · WORKSPACE</span><h3>공공기관 업무공간 구축</h3></div><span class="more">↗</span></article>
+        <article class="case"><div><span>MEETING · COLLABORATION</span><h3>대회의실 환경 개선</h3></div><span class="more">↗</span></article>
+        <article class="case"><div><span>CUSTOM SOLUTION</span><h3>비규격 가구 설계·제작</h3></div><span class="more">↗</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section brands" id="brands">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">Brand Portfolio</span><h2>한 브랜드에 맞추지 않고,<br />공간에 맞춰 선택합니다.</h2></div>
+        <p>품질, 예산, 디자인, 납기 조건에 따라 브랜드와 맞춤 제작을 유연하게 조합합니다.</p>
+      </div>
+      <div class="brand-row">
+        <div class="brand">FURSYS</div><div class="brand">DESKER</div><div class="brand">SIDIZ</div><div class="brand">BESTUHL</div>
+        <div class="brand">PATRA</div><div class="brand">ILOOM</div><div class="brand">ALLOSO</div><div class="brand">CUSTOM <small>MADE</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" id="about">
+    <div class="wrap about-grid">
+      <div><span class="eyebrow">About Vitaspace</span><h2>일하는 방식을 설계하고,<br /><em>공간의 성과를 완성합니다.</em></h2></div>
+      <div class="about-copy">
+        <p>비타스페이스는 가구를 판매하는 데서 멈추지 않습니다. 사용자의 움직임과 조직의 일하는 방식을 이해하고, 공간이 제 역할을 오래 수행하도록 설계합니다.</p>
+        <div class="about-points">
+          <div class="about-point"><b>Space for Life</b><span>사용자 중심 공간 철학</span></div>
+          <div class="about-point"><b>On Trust</b><span>과정과 결과에 대한 책임</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Project Inquiry</span>
+        <h2>공간의 고민을<br />들려주세요.</h2>
+        <p>도면이 없어도 괜찮습니다. 예상 인원과 공간 규모, 필요한 시점만 알려주시면 상담 방향을 안내해드립니다.</p>
+      </div>
+      <ContactForm variant="home" />
+    </div>
+  </section>
+</BaseLayout>

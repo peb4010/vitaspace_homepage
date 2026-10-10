@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Card from '../components/Card.astro';
+import ProcessStep from '../components/ProcessStep.astro';
+import '../styles/detail.css';
+---
+
+<BaseLayout
+  title="진행방식 | VITASPACE"
+  description="사무환경 상담부터 실측, 3D 레이아웃, 납품과 사후관리까지 비타스페이스의 프로젝트 진행 방식"
+  activePath="process"
+>
+  <PageHero eyebrow="How We Work" description="공공기관과 기업 프로젝트에 필요한 의사결정 항목을 단계별로 정리하고, 담당자가 안심할 수 있도록 진행 상황과 산출물을 공유합니다.">
+    검토부터 설치까지,<br />과정이 명확합니다.
+  </PageHero>
+
+  <section class="section dark">
+    <div class="wrap">
+      <SectionHead eyebrow="Project Flow" description="프로젝트 규모와 발주 방식에 따라 단계는 조정되며, 일정·예산·규격을 하나의 기준으로 관리합니다.">
+        5단계 통합 프로세스
+      </SectionHead>
+      <div class="timeline">
+        <ProcessStep step="STEP 01" title="상담 및 요구사항 정의" description="인원, 공간 규모, 예산, 희망 일정, 구매 방식과 우선순위를 확인합니다." />
+        <ProcessStep step="STEP 02" title="현장 실측 및 조건 검토" description="공간 치수, 출입·양중 동선, 전기·통신 위치와 기존 집기 현황을 점검합니다." />
+        <ProcessStep step="STEP 03" title="레이아웃·3D·제품 제안" description="수용 인원과 업무 흐름을 반영한 배치안, 3D 이미지, 제품 사양과 비교견적을 제안합니다." />
+        <ProcessStep step="STEP 04" title="사양 확정 및 발주" description="색상, 수량, 규격과 납품 조건을 최종 확인하고 제작·발주 일정을 수립합니다." />
+        <ProcessStep step="STEP 05" title="납품·설치·사후관리" description="현장 반입과 설치, 검수, 보완 사항까지 관리하며 이후 추가 구매와 유지관리도 지원합니다." />
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <SectionHead eyebrow="Deliverables" description="구두 협의에 의존하지 않고 실무자가 내부 검토와 보고에 활용할 수 있는 자료를 제공합니다.">
+        단계별로 확인할 수 있는 자료
+      </SectionHead>
+      <div class="grid-3">
+        <Card num="01" title="배치계획" description="평면 레이아웃, 좌석 수, 주요 동선과 공간별 가구 구성을 확인합니다." />
+        <Card num="02" title="3D 제안 이미지" description="색상과 공간 밀도, 실제 사용 장면을 도입 전에 직관적으로 검토합니다." />
+        <Card num="03" title="견적·제품 사양" description="품목별 규격과 수량, 브랜드, 옵션을 비교 가능한 형태로 정리합니다." />
+        <Card num="04" title="공정·납품 일정" description="발주, 제작, 반입, 설치와 검수 일정을 현장 공정에 맞춰 관리합니다." />
+        <Card num="05" title="납품 관련 서류" description="프로젝트에서 요구하는 견적·거래·제품 관련 서류 준비를 지원합니다." />
+        <Card num="ONE-STOP" title="한 명의 담당자로 일관되게" description="상담부터 사후관리까지 같은 기준으로 소통해 누락과 업무 부담을 줄입니다." feature />
+      </div>
+    </div>
+  </section>
+
+  <CtaSection label="상담 신청하기 ↗">
+    프로젝트 일정과 공간 정보를<br />알려주시면 시작 방법을 안내합니다.
+  </CtaSection>
+</BaseLayout>

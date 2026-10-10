@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Card from '../components/Card.astro';
+import ContactForm from '../components/ContactForm.astro';
+import '../styles/detail.css';
+---
+
+<BaseLayout
+  title="상담신청 | VITASPACE"
+  description="공공기관과 기업 사무환경 구축, 가구 납품, 3D 레이아웃 상담 신청"
+  activePath="contact"
+>
+  <PageHero eyebrow="Project Inquiry" description="도면이 없어도 괜찮습니다. 예상 인원, 공간 규모와 필요한 시점만 알려주시면 검토 순서와 준비 자료를 안내해드립니다.">
+    공간의 고민을<br />들려주세요.
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Before Contact</span>
+        <h2>이 정보가 있으면<br />더 빠릅니다.</h2>
+        <div class="contact-list">
+          <div class="contact-row"><small>01</small>공간 주소와 대략적인 면적</div>
+          <div class="contact-row"><small>02</small>예상 사용 인원과 필요한 품목</div>
+          <div class="contact-row"><small>03</small>희망 납품 시점과 예산 범위</div>
+          <div class="contact-row"><small>04</small>평면도 또는 현장 사진</div>
+        </div>
+        <p style="color:var(--muted);margin-top:24px">자료가 준비되지 않은 경우 상담 후 필요한 항목부터 함께 정리합니다.</p>
+      </div>
+      <ContactForm />
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <SectionHead eyebrow="Consulting Scope" description="가구 한 품목 추가부터 전체 사무실 구축까지 필요한 범위만 선택할 수 있습니다.">
+        이런 상담이 가능합니다.
+      </SectionHead>
+      <div class="grid-3">
+        <Card title="가구 견적·비교" description="규격과 예산에 맞춰 브랜드별 제품과 대안을 비교합니다." />
+        <Card title="레이아웃·3D" description="평면도 또는 현장 실측을 기반으로 좌석과 공간 배치를 제안합니다." />
+        <Card title="통합 구축" description="납품·설치, 맞춤 제작, 이전과 기존 가구 처리까지 함께 검토합니다." />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

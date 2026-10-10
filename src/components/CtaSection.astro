@@ -1,0 +1,10 @@
+---
+const { href = '/contact/', label = '상담 신청하기 ↗' } = Astro.props;
+---
+
+<section class="cta">
+  <div class="wrap cta-inner">
+    <h2><slot /></h2>
+    <a class="btn" href={href}>{label}</a>
+  </div>
+</section>

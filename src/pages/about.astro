@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Card from '../components/Card.astro';
+import '../styles/detail.css';
+---
+
+<BaseLayout
+  title="회사소개 | VITASPACE"
+  description="일하는 방식을 설계하고 공간의 성과를 완성하는 사무환경 전문기업 비타스페이스"
+  activePath="about"
+>
+  <PageHero eyebrow="About Vitaspace" description="비타스페이스는 가구를 판매하는 데서 멈추지 않습니다. 조직의 업무 방식과 공간의 목적을 분석해 더 효율적으로 일할 수 있는 사무환경을 제안합니다.">
+    일하는 방식을 설계하고,<br />공간의 성과를 완성합니다.
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <SectionHead eyebrow="Our Approach" description="한 가지 브랜드나 제품에 공간을 맞추지 않습니다. 사용 인원과 업무 특성, 예산과 납기를 종합해 가장 현실적인 조합을 찾습니다.">
+        가구가 아니라<br />사무환경을 제안합니다.
+      </SectionHead>
+      <div class="grid-3">
+        <Card num="01" title="공간 분석" description="면적과 동선뿐 아니라 부서 관계, 회의 방식, 수납과 향후 증원까지 검토합니다." />
+        <Card num="02" title="통합 제안" description="사무가구, 맞춤 제작, 배치계획과 설치 조건을 하나의 제안으로 정리합니다." />
+        <Card num="03" title="실행 관리" description="발주 이후 제작, 반입, 설치와 검수까지 현장 기준으로 책임 있게 관리합니다." />
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="wrap">
+      <p class="quote">바르게 만든 가구가 바른 공간을 만들고,<br /><em>바른 공간이 구성원을 바꿉니다.</em></p>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <SectionHead eyebrow="Business Scope" description="제품 구매만 필요한 프로젝트부터 이전·폐기와 인테리어 연계가 필요한 프로젝트까지 범위에 맞춰 대응합니다.">
+        공간 구축 전반을<br />연결합니다.
+      </SectionHead>
+      <div class="grid-2">
+        <Card title="사무가구 납품" description="업무용 책상, 의자, 수납, 회의가구, 라커와 휴게가구를 공급합니다.">
+          <div class="pill-row"><span class="pill">퍼시스</span><span class="pill">데스커</span><span class="pill">시디즈</span><span class="pill">다수 브랜드</span></div>
+        </Card>
+        <Card title="사무환경 컨설팅" description="현장 실측, 좌석 계획, 동선과 3D 시뮬레이션을 통해 도입 전 완성도를 높입니다." />
+        <Card title="맞춤 제작" description="붙박이 수납장, 특수 규격 테이블과 현장 조건에 맞춘 비규격 가구를 설계·제작합니다." />
+        <Card title="이전·폐기·연계 서비스" description="기존 가구의 이전, 폐기, 중고 매입과 기업이사·클리닝·인테리어 연계를 지원합니다." />
+      </div>
+    </div>
+  </section>
+
+  <CtaSection label="프로젝트 문의하기 ↗">
+    공간의 목적부터 함께 정리해드리겠습니다.
+  </CtaSection>
+</BaseLayout>

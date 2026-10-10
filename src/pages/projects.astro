@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Card from '../components/Card.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import '../styles/detail.css';
+---
+
+<BaseLayout
+  title="납품사례 | VITASPACE"
+  description="공공기관 업무공간, 회의공간, 맞춤가구 등 비타스페이스의 사무환경 납품 분야"
+  activePath="projects"
+>
+  <PageHero eyebrow="Selected Projects" description="업무공간, 회의실, 임원공간, 교육장과 맞춤 제작까지 프로젝트 목적에 맞는 제품과 배치를 제안합니다.">
+    공간의 조건을 읽고,<br />해결책을 납품합니다.
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <SectionHead eyebrow="Project Categories" description="실제 프로젝트 이미지와 기관명은 자료 확보 후 교체할 수 있도록, 현재는 대표 유형 중심으로 구성했습니다.">
+        주요 납품 분야
+      </SectionHead>
+      <div class="grid-2">
+        <ProjectCard className="one" eyebrow="WORKSPACE" title="공공기관 업무공간 구축" description="좌석·수납·협업공간을 조직 구조에 맞게 통합 구성" />
+        <ProjectCard className="two" eyebrow="MEETING" title="회의·교육공간 개선" description="수용 인원과 시청각 환경을 고려한 테이블·의자 배치" />
+        <ProjectCard className="three" eyebrow="EXECUTIVE" title="임원·접견공간 구성" description="조직의 품격과 업무 효율을 함께 고려한 공간 제안" />
+        <ProjectCard className="three" eyebrow="CUSTOM MADE" title="비규격 가구 설계·제작" description="붙박이 수납, 대형 회의테이블, 특수 규격 가구 대응" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <SectionHead eyebrow="Case Review" description="완공 사진만 보여주는 대신, 담당자가 유사 프로젝트의 적용 가능성을 판단할 수 있게 구성합니다.">
+        사례에서 확인할 항목
+      </SectionHead>
+      <div class="grid-3">
+        <Card num="01" title="프로젝트 조건" description="공간 규모, 사용 인원, 공사 일정과 핵심 요청사항을 안내합니다." />
+        <Card num="02" title="제안 포인트" description="동선, 수납, 배선, 협업 방식 등 해결이 필요했던 문제를 설명합니다." />
+        <Card num="03" title="적용 제품" description="브랜드와 시리즈, 맞춤 제작 범위 및 주요 옵션을 명시합니다." />
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="wrap">
+      <p class="quote">비슷한 면적이라도 조직과 업무 방식에 따라<br /><em>정답은 달라집니다.</em></p>
+      <div class="pill-row"><span class="pill">업무공간</span><span class="pill">대회의실</span><span class="pill">교육장</span><span class="pill">임원실</span><span class="pill">휴게공간</span><span class="pill">맞춤 제작</span><span class="pill">이전·폐기</span></div>
+    </div>
+  </section>
+
+  <CtaSection label="유사 사례 문의하기 ↗">
+    우리 기관과 비슷한 사례가 필요하신가요?
+  </CtaSection>
+</BaseLayout>

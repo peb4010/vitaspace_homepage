@@ -1,0 +1,19 @@
+---
+const { step, title, description, variant = 'timeline' } = Astro.props;
+---
+
+{
+  variant === 'compact' ? (
+    <article class="step">
+      <b>{step}</b>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </article>
+  ) : (
+    <article class="phase">
+      <b>{step}</b>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </article>
+  )
+}

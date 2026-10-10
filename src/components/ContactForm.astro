@@ -1,0 +1,43 @@
+---
+const { variant = 'full', className = 'form' } = Astro.props;
+const isHome = variant === 'home';
+---
+
+<form class={`${className} inquiry-form`}>
+  <input class="field" required placeholder="기관·회사명" aria-label="기관 또는 회사명" />
+  <input class="field" required placeholder="담당자명" aria-label="담당자명" />
+  <input class="field" required type="tel" placeholder="연락처" aria-label="연락처" />
+  <input class="field" type="email" placeholder="이메일" aria-label="이메일" />
+  <select class="field wide" aria-label="상담 유형">
+    <option>상담 유형을 선택해주세요</option>
+    <option>신규 사무공간 구축</option>
+    <option>가구 교체·추가 납품</option>
+    <option>3D 레이아웃 컨설팅</option>
+    {!isHome && <option>맞춤 제작 가구</option>}
+    <option>이전·폐기 포함 통합 상담</option>
+  </select>
+  {!isHome && <input class="field wide" placeholder="공간 규모 또는 예상 인원" aria-label="공간 규모 또는 예상 인원" />}
+  <textarea
+    class="field wide"
+    rows={isHome ? 3 : 5}
+    placeholder={isHome ? '예상 인원, 공간 규모, 희망 일정 등을 남겨주세요.' : '필요 품목, 희망 일정, 예산 등 프로젝트 정보를 남겨주세요.'}
+    aria-label="상담 내용"
+  ></textarea>
+  <label class="privacy">
+    <input type="checkbox" required /> 상담을 위한 개인정보 수집 및 이용에 동의합니다.
+  </label>
+  <button type="submit">상담 신청하기 ↗</button>
+  <div class="success" role="status">상담 신청이 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.</div>
+</form>
+
+<script>
+  document.querySelectorAll('.inquiry-form').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const success = form.querySelector('.success');
+      const button = form.querySelector('button');
+      if (success) success.style.display = 'block';
+      if (button) button.textContent = '접수 완료';
+    });
+  });
+</script>

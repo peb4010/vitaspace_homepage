@@ -1,0 +1,29 @@
+---
+const { activePath = '', variant = 'detail' } = Astro.props;
+
+const navItems = [
+  { key: 'process', href: '/process/', label: '진행방식' },
+  { key: 'projects', href: '/projects/', label: '납품사례' },
+  { key: 'about', href: '/about/', label: '회사소개' },
+  { key: 'brands', href: '/brands/', label: '취급브랜드' }
+];
+---
+
+<header class:list={[variant === 'home' && 'home-header']}>
+  <nav class="wrap">
+    <a class="logo" href="/">
+      VITASPACE
+      <small>PUBLIC OFFICE SOLUTIONS</small>
+    </a>
+    <div class="navlinks">
+      {navItems.map((item) => (
+        <a href={item.href} aria-current={activePath === item.key ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <a class="nav-cta" href="/contact/" aria-current={activePath === 'contact' ? 'page' : undefined}>
+      상담신청
+    </a>
+  </nav>
+</header>
