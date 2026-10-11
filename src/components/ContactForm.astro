@@ -1,7 +1,8 @@
 ---
 const { variant = 'full', className = 'form' } = Astro.props;
 const isHome = variant === 'home';
-const apiEndpoint = `${import.meta.env.PUBLIC_VITASPACE_API_URL ?? 'http://localhost:3000'}/api/vitaspace`;
+const apiBaseUrl = (import.meta.env.PUBLIC_VITASPACE_API_URL ?? 'http://localhost:3000').replace(/\/$/, '');
+const apiEndpoint = `${apiBaseUrl}/api/vitaspace`;
 ---
 
 <form class={`${className} inquiry-form`} data-api-endpoint={apiEndpoint}>
