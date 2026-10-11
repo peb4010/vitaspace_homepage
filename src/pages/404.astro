@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ErrorScreen from '../components/ErrorScreen.astro';
+import '../styles/detail.css';
+
+Astro.response.status = 404;
+---
+
+<BaseLayout
+  title="페이지를 찾을 수 없습니다 | VITASPACE"
+  description="요청하신 페이지를 찾을 수 없습니다. 비타스페이스의 주요 페이지 또는 상담 신청 페이지로 이동해 주세요."
+  robots="noindex, follow"
+>
+  <ErrorScreen
+    code="404"
+    eyebrow="Not Found"
+    title="요청하신 페이지를 찾을 수 없습니다."
+    description="주소가 변경되었거나 삭제된 페이지일 수 있습니다. 필요한 정보는 주요 메뉴에서 다시 확인해 주세요."
+  />
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ErrorScreen from '../components/ErrorScreen.astro';
+import '../styles/detail.css';
+
+Astro.response.status = 500;
+---
+
+<BaseLayout
+  title="오류가 발생했습니다 | VITASPACE"
+  description="일시적인 오류가 발생했습니다. 잠시 후 다시 시도하거나 비타스페이스 상담 페이지로 문의해 주세요."
+  robots="noindex, nofollow"
+>
+  <ErrorScreen
+    code="500"
+    eyebrow="Server Error"
+    title="일시적인 오류가 발생했습니다."
+    description="페이지를 불러오는 중 문제가 생겼습니다. 잠시 후 다시 시도하거나 상담 신청으로 문의해 주세요."
+    primaryLabel="다시 홈으로"
+  />
+</BaseLayout>
