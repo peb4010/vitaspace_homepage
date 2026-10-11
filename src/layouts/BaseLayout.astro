@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 const {
   title = 'VITASPACE | 공공기관 사무환경 구축',
   description = '공공기관과 기업을 위한 사무가구 제안, 3D 레이아웃, 납품·설치 통합 컨설팅',
+  robots,
   activePath = '',
   variant = 'detail'
 } = Astro.props;
@@ -17,13 +18,25 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23182022'/%3E%3Cpath d='M14 18h10l8 27 8-27h10L38 50H26z' fill='%23b8ef5a'/%3E%3C/svg%3E" />
   </head>
   <body>
     <Header activePath={activePath} variant={variant} />
-    <main>
+    <main class:list={[variant !== 'home' && 'with-fixed-header']}>
       <slot />
     </main>
     <Footer home={variant === 'home'} />
   </body>
 </html>
+
+<style is:global>
+  body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  main.with-fixed-header {
+    padding-top: 84px;
+  }
+</style>
