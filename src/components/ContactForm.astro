@@ -1,43 +1,208 @@
 ---
 const { variant = 'full', className = 'form' } = Astro.props;
 const isHome = variant === 'home';
+const apiEndpoint = `${import.meta.env.PUBLIC_VITASPACE_API_URL ?? 'http://localhost:3000'}/api/vitaspace`;
 ---
 
-<form class={`${className} inquiry-form`}>
-  <input class="field" required placeholder="기관·회사명" aria-label="기관 또는 회사명" />
-  <input class="field" required placeholder="담당자명" aria-label="담당자명" />
-  <input class="field" required type="tel" placeholder="연락처" aria-label="연락처" />
-  <input class="field" type="email" placeholder="이메일" aria-label="이메일" />
-  <select class="field wide" aria-label="상담 유형">
-    <option>상담 유형을 선택해주세요</option>
+<form class={`${className} inquiry-form`} data-api-endpoint={apiEndpoint}>
+  <input class="field" name="company" required placeholder="기관·회사명" aria-label="기관 또는 회사명" />
+  <input class="field" name="name" required placeholder="담당자명" aria-label="담당자명" />
+  <input class="field" name="tel" required type="tel" placeholder="연락처" aria-label="연락처" />
+  <input class="field" name="email" type="email" placeholder="이메일" aria-label="이메일" />
+  <select class="field wide" name="inquiryType" required aria-label="상담 유형">
+    <option value="">상담 유형을 선택해주세요</option>
     <option>신규 사무공간 구축</option>
     <option>가구 교체·추가 납품</option>
     <option>3D 레이아웃 컨설팅</option>
     {!isHome && <option>맞춤 제작 가구</option>}
     <option>이전·폐기 포함 통합 상담</option>
   </select>
-  {!isHome && <input class="field wide" placeholder="공간 규모 또는 예상 인원" aria-label="공간 규모 또는 예상 인원" />}
+  {!isHome && <input class="field wide" name="scale" placeholder="공간 규모 또는 예상 인원" aria-label="공간 규모 또는 예상 인원" />}
+  <input
+    class="field wide"
+    name="file"
+    type="file"
+    aria-label="첨부파일"
+  />
+  <p class="file-info wide" hidden></p>
   <textarea
     class="field wide"
+    name="content"
     rows={isHome ? 3 : 5}
     placeholder={isHome ? '예상 인원, 공간 규모, 희망 일정 등을 남겨주세요.' : '필요 품목, 희망 일정, 예산 등 프로젝트 정보를 남겨주세요.'}
     aria-label="상담 내용"
   ></textarea>
   <label class="privacy">
-    <input type="checkbox" required /> 상담을 위한 개인정보 수집 및 이용에 동의합니다.
+    <input name="agree" type="checkbox" value="TRUE" required /> 상담을 위한 개인정보 수집 및 이용에 동의합니다.
   </label>
   <button type="submit">상담 신청하기 ↗</button>
   <div class="success" role="status">상담 신청이 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.</div>
 </form>
 
 <script>
+  const maxFileSize = 10 * 1024 * 1024;
+  const telPattern = /^010-?\d{4}-?\d{4}$/;
+
+  function formatFileSize(size) {
+    if (size < 1024) return `${size} bytes`;
+    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+    return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+  }
+
+  function showDialog(message) {
+    alert(message);
+  }
+
+  function focusField(field) {
+    if (field && typeof field.focus === 'function') field.focus();
+  }
+
   document.querySelectorAll('.inquiry-form').forEach(function(form) {
-    form.addEventListener('submit', function(e) {
+    const fileInput = form.querySelector('input[type="file"]');
+    const fileInfo = form.querySelector('.file-info');
+    const button = form.querySelector('button[type="submit"]');
+
+    if (fileInput) {
+      fileInput.addEventListener('change', function(e) {
+        const input = e.currentTarget;
+        const file = input.files && input.files[0];
+
+        if (file && file.size > maxFileSize) {
+          input.value = '';
+          if (fileInfo) {
+            fileInfo.hidden = true;
+            fileInfo.textContent = '';
+          }
+          showDialog('파일 용량은 10MB 이하로 업로드해주세요.');
+          return;
+        }
+
+        if (file && fileInfo) {
+          fileInfo.hidden = false;
+          fileInfo.textContent = `파일 이름: ${file.name} / 파일 크기: ${formatFileSize(file.size)}`;
+        } else if (fileInfo) {
+          fileInfo.hidden = true;
+          fileInfo.textContent = '';
+        }
+      });
+    }
+
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
-      const success = form.querySelector('.success');
-      const button = form.querySelector('button');
-      if (success) success.style.display = 'block';
-      if (button) button.textContent = '접수 완료';
+      const formData = new FormData(form);
+      const company = formData.get('company')?.toString().trim();
+      const name = formData.get('name')?.toString().trim();
+      const tel = formData.get('tel')?.toString().trim();
+      const inquiryType = formData.get('inquiryType')?.toString().trim();
+      const agree = formData.get('agree');
+      const file = fileInput && fileInput.files && fileInput.files[0];
+
+      if (!company) {
+        focusField(form.elements.company);
+        showDialog('기관·회사명을 입력해 주세요.');
+        return;
+      }
+
+      if (!name) {
+        focusField(form.elements.name);
+        showDialog('담당자명을 입력해 주세요.');
+        return;
+      }
+
+      if (!tel) {
+        focusField(form.elements.tel);
+        showDialog('연락처를 입력해 주세요.');
+        return;
+      }
+
+      if (!telPattern.test(tel)) {
+        focusField(form.elements.tel);
+        showDialog('연락처를 형식에 맞게 입력해주세요.');
+        return;
+      }
+
+      if (!inquiryType) {
+        focusField(form.elements.inquiryType);
+        showDialog('상담 희망 항목을 선택해주세요.');
+        return;
+      }
+
+      if (!agree) {
+        focusField(form.elements.agree);
+        showDialog('개인정보 수집 및 이용에 동의해주세요.');
+        return;
+      }
+
+      if (file && file.size > maxFileSize) {
+        fileInput.value = '';
+        showDialog('파일 용량은 10MB 이하로 업로드해주세요.');
+        return;
+      }
+
+      if (!file || !file.size) formData.delete('file');
+
+      try {
+        if (button) {
+          button.disabled = true;
+          button.textContent = '신청 중입니다.';
+        }
+        const response = await fetch(form.dataset.apiEndpoint, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          let message = '신청이 완료되지 못했습니다.\n반복될 경우 문의주세요.';
+          try {
+            const result = await response.json();
+            if (result?.error) message = result.error;
+          } catch (_) {}
+
+          showDialog(message);
+          return;
+        }
+
+        const success = form.querySelector('.success');
+        if (success) success.style.display = 'block';
+        if (button) {
+          button.disabled = false;
+          button.textContent = '접수 완료';
+        }
+        showDialog('상담 신청이 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.');
+        form.reset();
+        if (fileInfo) {
+          fileInfo.hidden = true;
+          fileInfo.textContent = '';
+        }
+      } catch (err) {
+        console.error('Inquiry submit error:', err);
+        showDialog('신청이 완료되지 못했습니다.\n반복될 경우 문의주세요.');
+      } finally {
+        if (button && button.textContent !== '접수 완료') {
+          button.disabled = false;
+          button.textContent = '상담 신청하기 ↗';
+        }
+      }
     });
   });
 </script>
+
+<style>
+  .file-info {
+    grid-column: span 2;
+    margin: -4px 0 4px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  button:disabled {
+    cursor: progress;
+    opacity: 0.72;
+  }
+
+  @media (max-width: 560px) {
+    .file-info {
+      grid-column: 1;
+    }
+  }
+</style>
