@@ -1,1 +1,0 @@
-document.querySelectorAll('.inquiry-form').forEach(function(form){form.addEventListener('submit',function(e){e.preventDefault();form.querySelector('.success').style.display='block';form.querySelector('button').textContent='접수 완료';});});

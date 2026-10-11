@@ -14,7 +14,6 @@
 - `src/components/` — Header, Footer, 폼, 카드 등 공통 컴포넌트
 - `src/styles/home.css` — 메인 페이지 스타일
 - `src/styles/detail.css` — 상세 페이지 공통 스타일
-- `site/` — Astro 전환 전 원본 정적 HTML 백업
 - `DEVELOPER-HANDOFF.md` — 개발자 전달 및 수정 안내
 
 ## 로컬 실행
