@@ -27,5 +27,6 @@ pnpm-debug.log*
 
 .vercel/
 .netlify/
+.firebase/
 
 coverage/
