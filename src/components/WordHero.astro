@@ -1,0 +1,161 @@
+---
+const scenes = [
+  {word:'WORK', image:'/media/delivery/samdong-1.jpg', alt:'책상과 업무용 의자가 배치된 삼동플러스 사무실'},
+  {word:'CONNECT', image:'/media/delivery/samdong-3.jpg', alt:'긴 테이블을 중심으로 의자가 놓인 삼동플러스 회의실'},
+  {word:'REST', image:'/media/experiments/lounge-original.png', alt:'화이트 소파와 원형 테이블이 놓인 삼동플러스 라운지'},
+];
+---
+<section class="word-hero" aria-label="일하고, 나누고, 쉬는 공간">
+  <div class="word-stage">
+  <header class="word-brand"><a href="/compare/d/" aria-label="비타스페이스 D안 홈">VITASPACE</a></header>
+  <div class="word-screen">
+    {scenes.map((scene,index)=>(
+      <figure class="word-scene" data-active={index===0 ? 'true' : 'false'} aria-hidden={index!==0}>
+        <img src={scene.image} alt={scene.alt} width="1536" height="1024" loading="eager" decoding="async" />
+        <figcaption>{scene.word}</figcaption>
+      </figure>
+    ))}
+    <nav class="word-menu" id="word-menu" aria-label="주요 메뉴" hidden>
+      <div class="word-menu-links">
+      <a href="#g-services">가구와 공간</a>
+      <a href="#g-brands">브랜드</a>
+      <a href="#g-process">진행 과정</a>
+      <a href="/about/">비타스페이스</a>
+      <a class="word-menu-contact" href="#g-contact">프로젝트 상담</a>
+      </div>
+      <figure class="word-menu-visual" aria-hidden="true">
+        <img src={scenes[0].image} alt="" width="1536" height="1024" />
+        <figcaption>{scenes[0].word}</figcaption>
+      </figure>
+    </nav>
+  </div>
+  <div class="word-footer">
+    <div class="word-select" role="group" aria-label="공간 선택">
+      {scenes.map((scene,index)=><button data-scene={index} aria-label={`${scene.word} 공간 보기`} aria-pressed={index===0}>{scene.word}</button>)}
+    </div>
+    <button class="word-menu-toggle" aria-controls="word-menu" aria-expanded="false"><span aria-hidden="true">≡</span> 메뉴</button>
+  </div>
+  </div>
+</section>
+<section class="word-intro">
+  <p>VITASPACE</p>
+  <h1>공공의 공간을<br />더 나은 일터로.</h1>
+  <div><p>가구의 선택부터 배치, 납품·설치까지.<br />일상의 공간을 함께 만듭니다.</p><a href="#g-services">우리가 공간을 만드는 방법 <span aria-hidden="true">↓</span></a></div>
+</section>
+
+<style>
+  .word-hero{height:260svh;position:relative;background:#fff;color:#111;--frame:50px}.word-stage{height:100svh;position:sticky;top:0;overflow:clip}
+  .word-brand{position:absolute;z-index:2;top:0;left:0;right:0;height:var(--frame);display:grid;place-items:center;background:none;border:0}
+  .word-brand a{font:500 16px/1 Arial,sans-serif;letter-spacing:.035em;color:#111}
+  .word-screen{position:absolute;inset:var(--frame);border:1px solid #111;overflow:hidden;background:#e9e9e5}
+  .word-scene{position:absolute;inset:0;margin:0;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s}.word-scene[data-active="true"]{opacity:1;visibility:visible}
+  .word-scene img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 55%}
+  .word-scene::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 38% 31% at 50% 50%,#0009 0%,#0006 40%,#0000 100%)}
+  .word-scene figcaption{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--word-font),sans-serif;font-size:clamp(72px,11vw,180px);font-weight:400;line-height:1.15;letter-spacing:-.055em;color:#fff;z-index:1;text-shadow:0 2px 12px #0005;pointer-events:none}
+  .word-footer{position:absolute;bottom:0;left:var(--frame);right:var(--frame);height:var(--frame);display:flex;align-items:center;justify-content:center}
+  .word-menu-toggle{display:flex;align-items:center;justify-content:center;gap:5px;min-width:80px;min-height:44px;background:none;border:0;color:inherit;font:inherit;font-size:14px;line-height:1.2;cursor:pointer}
+  .word-select{position:absolute;left:0;display:flex;gap:24px}
+  .word-select button{height:44px;padding:0;border:0;background:none;color:#888;font:11px/1 Arial,sans-serif;letter-spacing:.08em;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:6px;transition:color .2s,text-decoration-color .2s}
+  
+  .word-select [aria-pressed="true"]{color:#111;text-decoration-color:currentColor}
+  
+  .word-hero[data-menu="open"] .word-select{visibility:hidden}
+  .word-menu{position:absolute;inset:0;height:auto;width:auto;padding:0;box-sizing:border-box;z-index:2;background:#fff;display:grid;grid-template-columns:56% 44%;align-items:stretch;gap:0;animation:menu-in .35s ease-out}
+  .word-menu-links{display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,4vw,72px) clamp(32px,5.5vw,88px)}
+  .word-menu-links>a{display:block;padding:18px 0;border-bottom:1px solid #deded8;font-family:inherit;font-size:clamp(28px,3.5vw,56px);font-weight:500;line-height:1.35;letter-spacing:-.035em;color:#191c19;transition:color .2s,transform .25s}
+  .word-menu-links>a:hover{color:#666;transform:translateX(8px)}
+  .word-menu-links>.word-menu-contact{font-weight:400;align-self:flex-start;margin-top:30px;padding:8px 0;font-family:inherit;font-size:15px;letter-spacing:0;border-bottom-color:#191c19}
+  .word-menu-visual{position:relative;margin:0;overflow:hidden;border-left:1px solid #111}
+  .word-menu-visual img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+  .word-menu-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,#0006)}
+  .word-menu-visual figcaption{position:absolute;bottom:40px;left:40px;right:24px;z-index:1;color:#fff;font-family:var(--word-font),sans-serif;font-size:clamp(42px,4.5vw,76px);line-height:1.2;letter-spacing:0;text-shadow:0 2px 12px #0005}
+  @keyframes menu-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.word-menu{animation:none}.word-menu-links>a{transition:none}}
+  .word-intro{background:#fff;padding:130px 8vw 140px;color:#111;border-top:1px solid #eee}
+  .word-intro>p{font:14px Arial,sans-serif;letter-spacing:.08em;margin:0 0 48px}
+  .word-intro h1{font-size:clamp(42px,7vw,110px);font-weight:500;line-height:1.2;letter-spacing:-.06em;margin:0 0 48px}
+  .word-intro>div{margin-left:40%;font-size:16px;line-height:1.8}
+  .word-intro a{display:inline-block;padding:16px 0;text-decoration:underline;text-underline-offset:6px}
+  [hidden]{display:none!important}
+  :is(a,button):focus-visible{outline:2px solid #111;outline-offset:3px}
+  @media(max-width:760px){
+    .word-hero{--frame:20px}
+    .word-brand{height:56px}.word-brand a{font-size:14px}
+    .word-screen{inset:56px 20px 160px}
+    .word-scene::after{background:radial-gradient(ellipse 70% 25% at 50% 50%,#0009 0%,#0006 40%,#0000 100%)}
+    .word-scene figcaption{font-size:clamp(36px,10.5vw,76px)}
+    .word-footer{bottom:116px;height:44px;justify-content:space-between}
+    .word-select{position:static;gap:16px}.word-select button{font-size:10px}
+    
+    .word-menu{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) 27%;overflow:auto}
+    .word-menu-links{padding:18px 26px}
+    .word-menu-links>a{padding:10px 0;font-size:clamp(23px,7vw,32px)}
+    .word-menu-links>.word-menu-contact{font-size:13px;margin-top:16px;padding:6px 0}
+    .word-menu-visual{border-left:0;border-top:1px solid #111;min-height:0}
+    .word-menu-visual img{position:absolute;inset:0;object-position:50% 65%}
+    .word-menu-visual figcaption{bottom:18px;left:26px;font-size:36px}
+    .word-intro{padding:80px 24px}.word-intro>div{margin-left:0}.word-intro>p{margin-bottom:32px}
+  }
+  @media(max-height:580px) and (min-width:761px){.word-hero{--frame:42px}.word-scene figcaption{font-size:90px}.word-menu-links{padding:20px 40px}.word-menu-links>a{font-size:28px;padding:10px 0}.word-menu-links>.word-menu-contact{font-size:14px;margin-top:16px}}
+  @media(prefers-reduced-motion:reduce){
+    .word-hero{height:auto}.word-stage{position:relative}.word-scene,.word-select button{transition:none}
+  }
+</style>
+
+<script>
+  const hero=document.querySelector<HTMLElement>('.word-hero');
+  if(hero){
+    const stage=hero.querySelector<HTMLElement>('.word-stage')!;
+    const scenes=[...hero.querySelectorAll<HTMLElement>('.word-scene')];
+    const selectors=[...hero.querySelectorAll<HTMLButtonElement>('[data-scene]')];
+    const menu=hero.querySelector<HTMLElement>('.word-menu')!;
+    const menuToggle=hero.querySelector<HTMLButtonElement>('.word-menu-toggle')!;
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+    let current=0,frame=0;
+    function show(index:number){
+      current=index;
+      scenes.forEach((scene,i)=>{scene.dataset.active=String(i===current);scene.setAttribute('aria-hidden',String(i!==current));});
+      selectors.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===current)));
+    }
+    function render(){
+      frame=0;
+      if(reduced.matches||!menu.hidden)return;
+      const travel=hero!.offsetHeight-stage.offsetHeight;
+      const progress=Math.max(0,Math.min(1,-hero!.getBoundingClientRect().top/Math.max(1,travel)));
+      const index=progress<.28?0:progress<.62?1:2;
+      if(index!==current)show(index);
+    }
+    function queue(){if(!frame)frame=requestAnimationFrame(render);}
+    function select(index:number){
+      const target=Math.max(0,Math.min(scenes.length-1,index));
+      if(reduced.matches){show(target);return;}
+      const travel=hero!.offsetHeight-stage.offsetHeight;
+      const progress=[0,.43,.78][target];
+      window.scrollTo({top:scrollY+hero!.getBoundingClientRect().top+travel*progress,behavior:'auto'});
+      show(target);
+    }
+    function setMenu(open:boolean){
+      if(open){
+        menu.querySelector('img')!.src=scenes[current].querySelector('img')!.src;
+        menu.querySelector('figcaption')!.textContent=scenes[current].querySelector('figcaption')!.textContent;
+      }
+      hero!.dataset.menu=open?'open':'closed';
+      menu.hidden=!open;
+      menuToggle.setAttribute('aria-expanded',String(open));
+      menuToggle.innerHTML=open?'<span aria-hidden="true">×</span> 닫기':'<span aria-hidden="true">≡</span> 메뉴';
+      if(!open)queue();
+    }
+    selectors.forEach((button,i)=>button.addEventListener('click',()=>select(i)));
+    menuToggle.addEventListener('click',()=>setMenu(menu.hidden));
+    menu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    hero.addEventListener('keydown',event=>{
+      if(event.key==='Escape'&&!menu.hidden){setMenu(false);menuToggle.focus();return;}
+      if(event.altKey||event.ctrlKey||event.metaKey||!menu.hidden)return;
+      if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();select(current+(event.key==='ArrowRight'?1:-1));}
+    });
+    addEventListener('scroll',queue,{passive:true});
+    addEventListener('resize',queue);
+    reduced.addEventListener('change',()=>{show(0);queue();});
+    render();
+  }
+</script>

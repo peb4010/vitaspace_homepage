@@ -1,0 +1,42 @@
+---
+const spaces = [
+  {title:'함께 일하는 공간',type:'업무공간',src:'/media/delivery/samdong-1.jpg',text:'책상과 수납, 일하는 동선을 함께 생각합니다.'},
+  {title:'생각을 나누는 공간',type:'회의공간',src:'/media/delivery/samdong-3.jpg',text:'회의의 규모와 사용 방식에 맞춰 구성합니다.'},
+  {title:'잠시 쉬어가는 공간',type:'휴게공간',src:'/media/experiments/lounge-original.png',text:'일터 안에 편안한 쉼의 자리를 만듭니다.'},
+];
+---
+<section class="space-gallery" id="works" aria-label="실제 납품 공간">
+  <div class="gallery-heading"><div><p class="kicker">SPACES IN USE</p><h2>공간으로 보는 비타스페이스.</h2></div><p>일하고, 이야기하고, 쉬어가는 곳.<br />실제 납품 공간을 가까이 살펴보세요.</p></div>
+  <div class="gallery-rail" tabindex="0" aria-label="공간 사진 목록. 좌우 화살표로 이동">
+    {spaces.map((space,index)=><article><button data-gallery-photo={index} aria-label={`${space.type} 사진 크게 보기`}><img src={space.src} alt={`${space.title} 실제 납품 사진`} loading="lazy" width="1536" height="1024"/></button><div class="gallery-caption"><div><span>{space.type}</span><h3>{space.title}</h3></div><p>{space.text}</p></div></article>)}
+  </div>
+  <div class="gallery-controls"><span class="gallery-count" aria-live="polite">01 / 03</span><div><button data-gallery-step="-1" aria-label="이전 공간" disabled>←</button><button data-gallery-step="1" aria-label="다음 공간">→</button></div></div>
+  <dialog class="gallery-dialog" aria-label="공간 사진 크게 보기"><button aria-label="사진 닫기">닫기 ×</button><img src={spaces[0].src} alt=""/><p></p></dialog>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('.space-gallery').forEach(gallery=>{
+    const rail=gallery.querySelector<HTMLElement>('.gallery-rail')!;
+    const cards=[...rail.querySelectorAll<HTMLElement>('article')];
+    const buttons=[...gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-step]')];
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+    const step=()=>cards[0].getBoundingClientRect().width+parseFloat(getComputedStyle(rail).columnGap);
+    function update(){const index=Math.min(cards.length-1,Math.round(rail.scrollLeft/step()));gallery.querySelector('.gallery-count')!.textContent=`0${index+1} / 0${cards.length}`;buttons[0].disabled=rail.scrollLeft<2;buttons[1].disabled=rail.scrollLeft>=rail.scrollWidth-rail.clientWidth-2;}
+    function move(direction:number){rail.scrollBy({left:direction*step(),behavior:reduce.matches?'auto':'smooth'});}
+    buttons.forEach(button=>button.addEventListener('click',()=>move(Number(button.dataset.galleryStep))));
+    rail.addEventListener('scroll',update,{passive:true});addEventListener('resize',update);
+    rail.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();move(event.key==='ArrowRight'?1:-1);}});update();
+    const dialog=gallery.querySelector<HTMLDialogElement>('dialog')!;
+    gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-photo]').forEach(button=>button.addEventListener('click',()=>{const source=button.querySelector('img')!;const img=dialog.querySelector('img')!;img.src=source.src;img.alt=source.alt;dialog.querySelector('p')!.textContent=source.alt;dialog.showModal();document.body.style.overflow='hidden';}));
+    dialog.querySelector('button')!.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{document.body.style.overflow='';});
+  });
+</script>
+<style>
+  .space-gallery{--gutter:clamp(24px,4.4vw,80px);padding:20px 0 88px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:16px;background:#fff;color:#171717;scroll-margin-top:0;overflow:hidden}*{box-sizing:border-box}p,h2,h3{margin:0}.gallery-heading{padding:0 var(--gutter);display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:0}.kicker{font:11px Arial;letter-spacing:.13em;margin-bottom:16px}h2{font-size:clamp(30px,3vw,44px);line-height:1.3;font-weight:500;letter-spacing:-.055em}.gallery-heading>p{font-size:15px;line-height:1.8;color:#666}.gallery-rail{min-height:0;display:flex;gap:28px;overflow:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);padding:0 var(--gutter);scrollbar-width:none}.gallery-rail::-webkit-scrollbar{display:none}.gallery-rail article{flex:0 0 78vw;min-width:0;scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px}.gallery-rail article:last-child{scroll-snap-align:end}.gallery-rail button{display:block;position:relative;padding:0;border:0;border-radius:18px;overflow:hidden;width:100%;background:#eee;cursor:zoom-in}.gallery-rail img{width:100%;height:clamp(280px,42svh,480px);object-fit:cover;object-position:50% 60%;display:block}.gallery-caption{display:flex;justify-content:space-between;align-items:end;gap:32px;padding-top:0}.gallery-caption span{font-size:12px;color:#666}h3{font-size:23px;font-weight:500;letter-spacing:-.04em;margin-top:8px}.gallery-caption p{font-size:14px;line-height:1.7;color:#666}.gallery-controls{padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between}.gallery-count{font:12px Arial;letter-spacing:.06em}.gallery-controls>div{display:flex;gap:10px}.gallery-controls button{width:44px;height:44px;background:transparent;border:1px solid #bbb;border-radius:50%;font-size:20px;cursor:pointer}.gallery-controls button:hover:enabled{background:#171717;color:#fff}.gallery-controls button:disabled{opacity:.3;cursor:default}:is(a,button,div):focus-visible{outline:2px solid #171717;outline-offset:4px}.gallery-dialog{width:min(1200px,94vw);padding:56px 20px 20px;border:0;border-radius:18px;background:#fff;color:#171717}.gallery-dialog::backdrop{background:#000d}.gallery-dialog>button{position:absolute;right:20px;top:12px;background:none;border:0;padding:10px;cursor:pointer}.gallery-dialog img{width:100%;height:70svh;object-fit:contain;display:block}.gallery-dialog p{font-size:13px;margin-top:16px}
+  @media(max-width:760px){.space-gallery{padding:28px 0 88px;gap:20px}.gallery-heading{display:block;margin-bottom:0}h2{font-size:30px}.kicker{margin-bottom:12px}.gallery-heading>p{margin-top:14px;font-size:13px}.gallery-rail{gap:16px}.gallery-rail article{flex-basis:82vw}.gallery-rail img{height:38svh;min-height:0}.gallery-caption{display:block;padding-top:0}.gallery-caption p{margin-top:8px;font-size:12px}h3{font-size:23px}.gallery-dialog img{height:60svh}}
+  @media(min-height:700px){
+    .space-gallery{height:calc(100svh - 110px)}
+    .gallery-rail button{min-height:0;height:100%}
+    .gallery-rail img{height:100%;min-height:0}
+  }
+  @media(min-height:700px) and (max-width:720px){.space-gallery{height:calc(100svh - 84px)}}
+</style>

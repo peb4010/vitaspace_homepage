@@ -5,6 +5,15 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      channel:
+        description: 'Deployment destination (client-review keeps the live site unchanged)'
+        type: choice
+        required: true
+        default: client-review
+        options:
+          - client-review
+          - live
 
 jobs:
   deploy:
@@ -35,4 +44,5 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_OFFICEHIVE }}
           projectId: officehive
-          channelId: live
+          channelId: ${{ github.event_name == 'workflow_dispatch' && inputs.channel || 'live' }}
+          expires: 30d

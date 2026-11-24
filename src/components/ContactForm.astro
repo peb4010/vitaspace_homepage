@@ -1,5 +1,5 @@
 ---
-const { variant = 'full', className = 'form' } = Astro.props;
+const { variant = 'full', className = 'form', submitLabel = '상담 신청하기 ↗' } = Astro.props;
 const isHome = variant === 'home';
 const apiBaseUrl = (import.meta.env.PUBLIC_VITASPACE_API_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 const apiEndpoint = `${apiBaseUrl}/api/vitaspace`;
@@ -36,7 +36,7 @@ const apiEndpoint = `${apiBaseUrl}/api/vitaspace`;
   <label class="privacy">
     <input name="agree" type="checkbox" value="TRUE" required /> 상담을 위한 개인정보 수집 및 이용에 동의합니다.
   </label>
-  <button type="submit">상담 신청하기 ↗</button>
+  <button type="submit" data-idle-label={submitLabel}>{submitLabel}</button>
   <div class="success" role="status">상담 신청이 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.</div>
 </form>
 
@@ -181,7 +181,7 @@ const apiEndpoint = `${apiBaseUrl}/api/vitaspace`;
       } finally {
         if (button && button.textContent !== '접수 완료') {
           button.disabled = false;
-          button.textContent = '상담 신청하기 ↗';
+          button.textContent = button.dataset.idleLabel || '상담 신청하기';
         }
       }
     });

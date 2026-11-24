@@ -1,0 +1,42 @@
+---
+import projects from '../data/delivery-projects.json';
+import FurnitureGallery from './FurnitureGallery.astro';
+---
+<FurnitureGallery />
+<section class="space-outro" id="delivery-collection">
+  <div class="collection-heading">
+    <p class="statement-label">VITASPACE</p>
+    <h1><span>공공의 공간을</span><span>더 나은 일터로.</span></h1>
+    <div class="collection-copy"><p>가구의 선택부터 배치, 납품·설치까지.<br />비타스페이스의 납품 현장을 살펴보세요.</p><a class="collection-contact" href="/contact/">프로젝트 상담</a></div>
+  </div>
+  <p class="collection-label">SELECTED PROJECTS</p>
+  <div class="collection-grid">
+    {projects.map((project,index)=>(<button class="collection-item" data-select-project={index}><img src={project.images[0]} width="960" height="640" loading="lazy" alt={`${project.name} 납품 현장`} /><span>{project.name}</span></button>))}
+  </div>
+</section>
+
+<style>
+  .space-outro{background:#f3f3ee;color:#17231c;padding:0 36px 100px}
+  .collection-heading{min-height:88svh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:clamp(48px,7vh,96px);padding:100px 0;margin-bottom:64px}
+  .statement-label,.collection-label{font:12px/1.4 Arial,sans-serif;letter-spacing:.15em;margin:0}
+  .collection-label{margin-bottom:32px}
+  .collection-heading h1{font-size:clamp(48px,9.6vw,160px);font-weight:350;line-height:1.22;letter-spacing:-.065em;margin:0}
+  .collection-heading h1 span{display:block;white-space:nowrap}
+  .collection-heading h1 span+span{margin-left:12%;font-weight:650}
+  .collection-copy{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-left:12%}
+  .collection-copy p{font-size:16px;line-height:1.8;margin:0}
+  .collection-contact{display:inline-flex;align-items:center;min-height:44px;flex-shrink:0;font-size:14px;text-decoration:underline;text-underline-offset:5px}
+  .collection-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 24px}
+  .collection-item{font:inherit;cursor:pointer;padding:0;border:0;background:none;color:inherit;text-align:left;min-width:0}
+  .collection-item img{display:block;width:100%;height:auto;aspect-ratio:1.6;object-fit:cover;transition:filter .3s}.collection-item:hover img{filter:brightness(.92)}
+  .collection-item>span{display:flex;justify-content:space-between;align-items:center;font-size:20px;margin-top:16px;gap:12px}.collection-item small{font-size:12px;color:#69726c}
+  [hidden]{display:none!important}
+  :is(a,button):focus-visible{outline:2px solid #d1efbc;outline-offset:4px}
+  .space-outro button:focus-visible{outline-color:#34583d}
+  @media(max-width:760px){
+    .space-outro{padding:0 20px 64px}.collection-heading{min-height:76svh;padding:72px 0;gap:48px;margin-bottom:32px}.collection-heading h1{font-size:clamp(36px,11.8vw,90px)}.collection-heading h1 span+span{margin-left:6%}.collection-copy{margin-left:6%}.collection-copy p{font-size:14px}.collection-grid{grid-template-columns:1fr;gap:32px}.collection-item>span{font-size:18px}
+  }
+  @media(prefers-reduced-motion:reduce){.collection-item img{transition:none}}
+</style>
+<style is:global>.home-cinematic .contact-grid>*,.home-cinematic .form>*{min-width:0}</style>
+

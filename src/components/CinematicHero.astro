@@ -1,0 +1,158 @@
+---
+import projects from '../data/delivery-projects.json';
+---
+<section class="space-story" aria-label="비타스페이스 납품사례 둘러보기">
+  <div class="space-stage" data-mode="film">
+    <div class="space-gallery" aria-label="현장 사진">
+      {projects.map((project,projectIndex)=>(
+        <div class="space-strip" data-project={projectIndex} hidden={projectIndex!==0}>
+          {project.images.map((src,index)=>(
+            <figure class="space-frame" aria-hidden={index!==0}>
+              <img src={src} alt={`${project.name} 납품 현장 사진 ${index+1}`} width="1920" height="1280" loading={projectIndex===0 && index<2?'eager':'lazy'} decoding="async" />
+            </figure>
+          ))}
+        </div>
+      ))}
+    </div>
+    <div class="space-film">
+      <video muted loop playsinline preload="metadata" poster={projects[0].images[0]} aria-label="삼동플러스 현장 사진을 편집한 공간 소개 영상">
+        <source src="/media/delivery/samdong-film-stable.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="space-shade"></div>
+    <header class="space-header">
+      <a class="space-wordmark" href="/" aria-label="비타스페이스 홈">VITASPACE</a>
+    </header>
+    <div class="film-controls">
+      <button class="film-toggle" aria-label="영상 재생" data-paused="true">
+        <svg class="pause-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10M11 3v10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        <svg class="play-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m5 3 8 5-8 5z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <div class="gallery-controls" hidden>
+      <span class="photo-count visually-hidden" aria-live="polite">1 / 6</span>
+    </div>
+    <div class="photo-dots" role="group" aria-label="사진 바로 선택" hidden>
+      {projects[0].images.map((_,index)=><button data-photo={index} aria-label={`${index+1}번째 사진`} aria-pressed={index===0}><span></span></button>)}
+    </div>
+  </div>
+</section>
+<section class="space-outro" id="delivery-collection">
+  <div class="collection-heading">
+    <p class="statement-label">VITASPACE</p>
+    <h1><span>공공의 공간을</span><span>더 나은 일터로.</span></h1>
+    <div class="collection-copy"><p>가구의 선택부터 배치, 납품·설치까지.<br />비타스페이스의 납품 현장을 살펴보세요.</p><a class="collection-contact" href="/contact/">프로젝트 상담</a></div>
+  </div>
+  <p class="collection-label">SELECTED PROJECTS</p>
+  <div class="collection-grid">
+    {projects.map((project,index)=>(<button class="collection-item" data-select-project={index}><img src={project.images[0]} width="960" height="640" loading="lazy" alt={`${project.name} 납품 현장`} /><span>{project.name}</span></button>))}
+  </div>
+</section>
+
+<style>
+  .space-story{height:480svh;background:#141714;color:white;position:relative}
+  .space-stage{position:sticky;top:0;height:100svh;overflow:hidden;--gallery:0;--photo-offset:0px}
+  .space-gallery,.space-film,.space-shade{position:absolute;inset:0}
+  .space-gallery{overflow:hidden}
+  .space-strip{height:100%;width:100%;display:flex;transform:translate3d(var(--photo-offset),0,0);will-change:transform}
+  .space-frame{position:relative;flex:0 0 100%;height:100%;margin:0;overflow:hidden}
+  .space-frame img,.space-film video{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+  .space-film{opacity:calc(1 - var(--gallery));pointer-events:none;overflow:hidden}
+  .space-shade{pointer-events:none;background:linear-gradient(180deg,#0005,transparent 15%,transparent 72%,#0006)}
+  .space-header{position:absolute;inset:0 0 auto;z-index:3;display:flex;align-items:center;justify-content:space-between;background:none;border:0;padding:24px 30px;font-size:14px;line-height:1.4}
+  button{font:inherit;cursor:pointer}
+  .space-wordmark{font:600 28px/1 Arial,sans-serif;letter-spacing:-.06em;flex-shrink:0}
+  .film-controls{position:absolute;left:30px;right:30px;bottom:77px;display:flex;justify-content:flex-end;align-items:center;opacity:calc(1 - var(--gallery))}
+  .film-toggle{display:grid;place-items:center;width:40px;height:40px;background:#0001;color:inherit;border:1px solid #ffffff65;border-radius:50%;padding:0}
+  .film-toggle .pause-icon{display:block}.film-toggle .play-icon{display:none}
+  .film-toggle[data-paused="true"] .pause-icon{display:none}.film-toggle[data-paused="true"] .play-icon{display:block}
+  .gallery-controls{position:absolute;left:30px;bottom:77px;height:44px;display:flex;align-items:center}
+  .photo-dots{position:absolute;right:30px;bottom:77px;display:flex}
+  .photo-dots button{width:28px;height:44px;padding:0;background:none;border:0;display:grid;place-items:center}
+  .photo-dots span{display:block;width:5px;height:5px;border-radius:50%;background:#fff7;transition:transform .2s}
+  .photo-dots [aria-pressed="true"] span{background:#fff;transform:scale(1.5)}
+  .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  .space-outro{background:#f3f3ee;color:#17231c;padding:0 36px 100px}
+  .collection-heading{min-height:88svh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:clamp(48px,7vh,96px);padding:100px 0;margin-bottom:64px}
+  .statement-label,.collection-label{font:12px/1.4 Arial,sans-serif;letter-spacing:.15em;margin:0}
+  .collection-label{margin-bottom:32px}
+  .collection-heading h1{font-size:clamp(48px,9.6vw,160px);font-weight:350;line-height:1.22;letter-spacing:-.065em;margin:0}
+  .collection-heading h1 span{display:block;white-space:nowrap}
+  .collection-heading h1 span+span{margin-left:12%;font-weight:650}
+  .collection-copy{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-left:12%}
+  .collection-copy p{font-size:16px;line-height:1.8;margin:0}
+  .collection-contact{display:inline-flex;align-items:center;min-height:44px;flex-shrink:0;font-size:14px;text-decoration:underline;text-underline-offset:5px}
+  .collection-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 24px}
+  .collection-item{padding:0;border:0;background:none;color:inherit;text-align:left;min-width:0}
+  .collection-item img{display:block;width:100%;height:auto;aspect-ratio:1.6;object-fit:cover;transition:filter .3s}.collection-item:hover img{filter:brightness(.92)}
+  .collection-item>span{display:flex;justify-content:space-between;align-items:center;font-size:20px;margin-top:16px;gap:12px}.collection-item small{font-size:12px;color:#69726c}
+  [hidden]{display:none!important}
+  :is(a,button):focus-visible{outline:2px solid #d1efbc;outline-offset:4px}
+  .space-outro button:focus-visible{outline-color:#34583d}
+  @media(max-width:760px){
+    .space-header{padding:18px 20px;font-size:12px}
+    .space-wordmark{font-size:20px}
+    .film-controls{left:20px;right:20px;bottom:132px}
+    .gallery-controls{left:20px;bottom:132px}
+    .photo-dots{right:20px;bottom:132px}.photo-dots button{width:22px}
+    .space-outro{padding:0 20px 64px}.collection-heading{min-height:76svh;padding:72px 0;gap:48px;margin-bottom:32px}.collection-heading h1{font-size:clamp(36px,11.8vw,90px)}.collection-heading h1 span+span{margin-left:6%}.collection-copy{margin-left:6%}.collection-copy p{font-size:14px}.collection-grid{grid-template-columns:1fr;gap:32px}.collection-item>span{font-size:18px}
+  }
+  @media(max-height:580px){.film-controls{bottom:80px}.gallery-controls{bottom:80px}.photo-dots{bottom:80px}}
+  @media(prefers-reduced-motion:reduce){.collection-item img{transition:none}}
+</style>
+<style is:global>.home-cinematic .contact-grid>*,.home-cinematic .form>*{min-width:0}</style>
+
+<script>
+  import projects from '../data/delivery-projects.json';
+  const story=document.querySelector<HTMLElement>('.space-story');
+  if(story){
+    const stage=story.querySelector<HTMLElement>('.space-stage')!;
+    const video=story.querySelector<HTMLVideoElement>('video')!;
+    const filmControls=story.querySelector<HTMLElement>('.film-controls')!;
+    const galleryControls=story.querySelector<HTMLElement>('.gallery-controls')!;
+    const dots=story.querySelector<HTMLElement>('.photo-dots')!;
+    const strips=Array.from(story.querySelectorAll<HTMLElement>('.space-strip'));
+    const toggle=story.querySelector<HTMLButtonElement>('.film-toggle')!;
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+    let project=0,photo=0,manualPause=reduced.matches,mode='',raf=false;
+    const photoCount=()=>projects[project].images.length;
+    const clamp=(x:number)=>Math.max(0,Math.min(1,x));
+    const length=()=>Math.max(1,story.offsetHeight-stage.offsetHeight);
+    function sync(){toggle.dataset.paused=String(video.paused);toggle.setAttribute('aria-label',video.paused?'영상 재생':'영상 일시정지');}
+    function play(){video.play().catch(sync);}
+    function update(){
+      raf=false;
+      const rect=story.getBoundingClientRect(),p=clamp(-rect.top/length());
+      const reveal=clamp((p-.015)/.1);
+      stage.style.setProperty('--gallery',String(reveal));
+      const activeMode=p<.115?'film':'gallery';
+      if(mode!==activeMode){mode=activeMode;stage.dataset.mode=mode;filmControls.inert=mode!=='film';filmControls.style.visibility=mode==='film'?'visible':'hidden';galleryControls.hidden=mode==='film';dots.hidden=mode==='film';}
+      const frame=clamp((p-.16)/.76)*(photoCount()-1);
+      photo=Math.round(frame);
+      stage.style.setProperty('--photo-offset',`${-Math.round((reduced.matches?photo:frame)*stage.clientWidth)}px`);
+      story.querySelector('.photo-count')!.textContent=`${photo+1} / ${photoCount()}`;
+      strips[project].querySelectorAll('figure').forEach((f,i)=>f.setAttribute('aria-hidden',String(i!==photo)));
+      dots.querySelectorAll<HTMLButtonElement>('button').forEach((b,i)=>{b.hidden=i>=photoCount();b.setAttribute('aria-pressed',String(i===photo));b.setAttribute('aria-label',`${i+1}번째 사진`);});
+      if(mode!=='film'||manualPause||document.hidden||rect.bottom<=0)video.pause();else if(video.paused)play();
+    }
+    function schedule(){if(!raf){raf=true;requestAnimationFrame(update);}}
+    function scrollToProgress(p:number,instant=false){window.scrollTo({top:window.scrollY+story.getBoundingClientRect().top+p*length(),behavior:instant||reduced.matches?'instant':'smooth'});}
+    function goPhoto(index:number,instant=false){const count=photoCount();scrollToProgress(.16+Math.max(0,Math.min(count-1,index))/Math.max(1,count-1)*.76,instant);}
+    function selectProject(index:number){
+      project=index;photo=0;
+      strips.forEach(strip=>{const active=Number(strip.dataset.project)===index;strip.hidden=!active;if(active)strip.querySelectorAll('img').forEach(img=>img.loading='eager');});
+      goPhoto(0,true);update();
+      dots.querySelector<HTMLButtonElement>('button')!.focus({preventScroll:true});
+    }
+    dots.querySelectorAll<HTMLButtonElement>('button').forEach(b=>b.addEventListener('click',()=>goPhoto(Number(b.dataset.photo))));
+    toggle.addEventListener('click',()=>{manualPause=!video.paused;if(manualPause)video.pause();else play();});
+    video.addEventListener('play',sync);video.addEventListener('pause',sync);video.addEventListener('error',()=>{toggle.setAttribute('aria-label','영상 재생 불가');toggle.disabled=true;});
+    document.querySelectorAll<HTMLButtonElement>('[data-select-project]').forEach(b=>b.addEventListener('click',()=>selectProject(Number(b.dataset.selectProject))));
+    story.addEventListener('keydown',e=>{if(mode==='gallery'&&!e.altKey&&!e.metaKey&&!e.ctrlKey){if(e.key==='ArrowRight'){e.preventDefault();goPhoto(photo+1);}if(e.key==='ArrowLeft'){e.preventDefault();goPhoto(photo-1);}}});
+    let touchX=0,touchY=0;
+    stage.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX;touchY=e.changedTouches[0].clientY;},{passive:true});
+    stage.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;if(mode==='gallery'&&Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)goPhoto(photo+(dx<0?1:-1));},{passive:true});
+    reduced.addEventListener('change',()=>{manualPause=reduced.matches;update();});
+    window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);document.addEventListener('visibilitychange',schedule);update();
+  }
+</script>

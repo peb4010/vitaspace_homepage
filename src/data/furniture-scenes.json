@@ -1,0 +1,38 @@
+[
+  {
+    "original": "/media/experiments/lounge-original.png",
+    "label": "화이트 소파 라운지",
+    "position": "50% 55%",
+    "hold": 0.25
+  },
+  {
+    "original": "/media/delivery/samdong-lounge-brown.png",
+    "label": "브라운 소파 라운지",
+    "position": "50% 55%",
+    "hold": 0.25
+  },
+  {
+    "original": "/media/delivery/samdong-3.jpg",
+    "label": "회의 공간",
+    "position": "50% 55%",
+    "hold": 0.25
+  },
+  {
+    "original": "/media/delivery/samdong-lounge-reverse.png",
+    "label": "다른 시점에서 바라본 라운지",
+    "position": "50% 55%",
+    "hold": 0.25
+  },
+  {
+    "original": "/media/delivery/samdong-5.jpg",
+    "label": "탕비 공간",
+    "position": "50% 55%",
+    "hold": 0.25
+  },
+  {
+    "original": "/media/delivery/samdong-1.jpg",
+    "label": "업무 공간",
+    "position": "50% 55%",
+    "hold": 0.25
+  }
+]

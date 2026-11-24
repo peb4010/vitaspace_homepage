@@ -1,0 +1,67 @@
+---
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>VITASPACE · 가구 등장 테스트</title>
+  </head>
+  <body>
+    <header><a href="/compare/e/">VITASPACE</a><a href="/compare/f/">F안으로 돌아가기</a></header>
+    <main>
+      <div class="photo" style="--empty:1">
+        <img src="/media/experiments/lounge-original.png" alt="흰 소파와 테이블이 배치된 실제 삼동플러스 현장" width="1536" height="1024" />
+        <img class="empty" src="/media/experiments/lounge-empty.png" alt="같은 공간에서 소파와 테이블을 지운 연출 이미지" width="1536" height="1024" />
+      </div>
+      <div class="controls">
+        <button id="play" type="button">전환 보기</button>
+        <label><span>빈 공간</span><input type="range" min="0" max="100" value="0" aria-label="가구가 나타나는 정도" /><span>실제 배치</span></label>
+      </div>
+      <p class="note">빈 공간은 AI로 가구를 제거한 연출이며, 가구가 있는 모습은 원본 사진입니다.</p>
+    </main>
+  </body>
+</html>
+<style>
+  :global(*){box-sizing:border-box}
+  :global(body){margin:0;background:#f3f3ee;color:#17231c;font-family:Arial,'Apple SD Gothic Neo',sans-serif}
+  header{display:flex;justify-content:space-between;align-items:center;padding:20px 30px}
+  a{color:inherit;text-decoration:none;font-size:13px}
+  header a:first-child{font-size:20px;font-weight:700;letter-spacing:-.06em}
+  main{width:min(1200px,calc(100% - 60px));margin:0 auto 24px}
+  .photo{position:relative;width:min(100%,calc((100svh - 182px)*1.5));aspect-ratio:3/2;margin:auto;overflow:hidden;background:#ddd}
+  .photo img{width:100%;height:100%;object-fit:contain;display:block}
+  .photo .empty{position:absolute;inset:0;opacity:var(--empty);mask-image:linear-gradient(to bottom,transparent 54%,#000 60%)}
+  .controls{display:flex;align-items:center;gap:36px;margin-top:20px}
+  button{background:#17231c;color:#fff;border:0;border-radius:24px;padding:0 24px;min-height:44px;font:inherit;font-size:14px;cursor:pointer;min-width:126px}
+  label{display:flex;align-items:center;gap:16px;flex:1;font-size:13px}
+  label span{white-space:nowrap}
+  input{flex:1;min-width:0;accent-color:#17231c;cursor:pointer}
+  .note{font-size:12px;line-height:1.6;color:#626a65;margin-top:14px}
+  @media(max-width:600px){header{padding:20px}main{width:calc(100% - 40px)}.photo{width:100%}.controls{flex-direction:column;align-items:stretch;gap:18px}button{align-self:flex-start}label{gap:10px}}
+</style>
+<script>
+  const photo=document.querySelector<HTMLElement>('.photo')!;
+  const range=document.querySelector<HTMLInputElement>('input')!;
+  const play=document.querySelector<HTMLButtonElement>('#play')!;
+  let frame=0,playing=false;
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  function set(value:number){range.value=String(value);photo.style.setProperty('--empty',String(1-value/100));}
+  function stop(){cancelAnimationFrame(frame);playing=false;play.textContent='전환 보기';}
+  function start(){
+    if(playing){stop();return;}
+    playing=true;play.textContent='일시정지';
+    const from=Number(range.value)>=99?0:Number(range.value);
+    set(from);
+    const begin=performance.now();
+    function tick(now:number){
+      const t=Math.max(0,Math.min(1,(now-begin-700)/(reduced.matches?1:2200)));
+      set(from+(100-from)*t*t*(3-2*t));
+      if(t<1)frame=requestAnimationFrame(tick);else stop();
+    }
+    frame=requestAnimationFrame(tick);
+  }
+  range.addEventListener('input',()=>{stop();set(Number(range.value));});
+  play.addEventListener('click',start);
+</script>

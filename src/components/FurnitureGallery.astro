@@ -1,0 +1,134 @@
+---
+import projects from '../data/delivery-projects.json';
+import scenes from '../data/furniture-scenes.json';
+const galleries = projects.map((project,index)=>({
+  name:project.name,
+  scenes:index===0?scenes:project.images.map((original,i)=>({original,label:`${project.name} 공간 ${i+1}`,position:'50% 50%',hold:.25}))
+}));
+const initialScreens=scenes.reduce((sum,scene)=>sum+scene.hold,0)+(scenes.length-1)*.95+1;
+---
+<section class="furniture-story" style={`--story-screens:${initialScreens}`} aria-label="실제 납품 공간 사진 감상">
+  <div class="furniture-stage">
+    {galleries.map((gallery,projectIndex)=>(
+      <div class="furniture-strip" data-project={projectIndex} hidden={projectIndex!==0}>
+        {gallery.scenes.map((scene,index)=>(
+          <figure class="furniture-frame" aria-hidden={projectIndex!==0||index!==0} data-hold={scene.hold} style={`--photo-position:${scene.position}`}>
+            <div class="furniture-photo">
+              <img src={scene.original} alt={scene.label} width="1536" height="1024" loading={projectIndex===0&&index<2?'eager':'lazy'} decoding="async" />
+            </div>
+          </figure>
+        ))}
+      </div>
+    ))}
+    <header class="furniture-header"><a href="/" aria-label="비타스페이스 홈">VITASPACE</a></header>
+    <div class="furniture-dots" role="group" aria-label="사진 선택">
+      {scenes.map((_,index)=><button data-photo={index} aria-label={`${index+1}번째 사진`} aria-pressed={index===0}><span></span></button>)}
+    </div>
+    <span class="furniture-count" aria-live="polite">1 / 6</span>
+  </div>
+</section>
+
+<style>
+  .furniture-story{height:calc(var(--story-screens)*100svh);position:relative;background:#181b18;color:#fff}
+  .furniture-stage{position:sticky;top:0;height:100svh;overflow:hidden;--photo-offset:0px;--frame-width:82vw;--frame-gap:2vw;--frame-inset:9vw}
+  .furniture-strip{position:absolute;inset:12svh 0 15svh;display:flex;gap:var(--frame-gap);padding-left:var(--frame-inset);transform:translate3d(var(--photo-offset),0,0);will-change:transform}
+  .furniture-frame{position:relative;flex:0 0 var(--frame-width);height:100%;margin:0;overflow:hidden}
+  .furniture-photo{position:absolute;inset:0}
+  .furniture-photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:var(--photo-position)}
+  .furniture-header{position:absolute;inset:0 0 auto;z-index:3;background:none;border:0;padding:24px 30px}
+  .furniture-header a{font:600 28px/1 Arial,sans-serif;letter-spacing:-.06em;color:#fff}
+  .furniture-dots{position:absolute;right:9vw;bottom:8svh;display:flex}
+  .furniture-dots button{width:28px;height:44px;padding:0;border:0;background:none;display:grid;place-items:center;cursor:pointer}
+  .furniture-dots span{width:5px;height:5px;border-radius:50%;background:#fff8}
+  .furniture-dots [aria-pressed="true"] span{background:#fff;transform:scale(1.5)}
+  .furniture-count{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  [hidden]{display:none!important}
+  :is(a,button):focus-visible{outline:2px solid #d1efbc;outline-offset:4px}
+  @media(max-width:760px){.furniture-stage{--frame-width:82vw;--frame-gap:3vw;--frame-inset:9vw}.furniture-strip{top:13svh;bottom:22svh}.furniture-header{padding:18px 20px}.furniture-header a{font-size:20px}.furniture-dots{right:9vw;bottom:calc(22svh - 50px)}.furniture-dots button{width:24px}}
+  @media(max-height:580px){.furniture-dots{bottom:80px}}
+</style>
+
+<script>
+  import projects from '../data/delivery-projects.json';
+  const story=document.querySelector<HTMLElement>('.furniture-story');
+  if(story){
+    const stage=story.querySelector<HTMLElement>('.furniture-stage')!;
+    const strips=Array.from(story.querySelectorAll<HTMLElement>('.furniture-strip'));
+    const frames=strips.map(strip=>Array.from(strip.querySelectorAll<HTMLElement>('.furniture-frame')));
+    const dots=Array.from(story.querySelectorAll<HTMLButtonElement>('[data-photo]'));
+    const countLabel=story.querySelector<HTMLElement>('.furniture-count')!;
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+    // Each resting position keeps a preview of the neighboring photograph in view.
+    const timelines=frames.map(group=>{
+      let start=0;
+      return group.map(frame=>{
+        const hold=Number(frame.dataset.hold)||.25;
+        const timing={start,hold,step:hold+.95};
+        start+=timing.step;
+        return timing;
+      });
+    });
+    let project=0,photo=0,queued=false;
+    const clamp=(n:number)=>Math.max(0,Math.min(1,n));
+    const timeline=()=>timelines[project];
+    const count=()=>frames[project].length;
+    const warm=(index:number)=>frames[project].slice(Math.max(0,index-1),index+3).forEach(frame=>frame.querySelectorAll('img').forEach(img=>img.loading='eager'));
+    function update(){
+      queued=false;
+      const timing=timeline();
+      const distance=Math.max(0,-story!.getBoundingClientRect().top)/stage.offsetHeight;
+      const next=timing.findIndex(scene=>distance<scene.start+scene.step);
+      const index=next<0?count()-1:next;
+      const current=timing[index];
+      const local=distance-current.start;
+      const slide=index<count()-1?clamp((local-current.hold)/(current.step-current.hold)):0;
+      const offset=index+(reduced.matches?Number(slide>=.5):slide);
+      photo=Math.min(count()-1,Math.round(offset));
+      const group=frames[project];
+      const stride=group.length>1?group[1].offsetLeft-group[0].offsetLeft:0;
+      stage.style.setProperty('--photo-offset',`${-offset*stride}px`);
+      group.forEach((frame,i)=>frame.setAttribute('aria-hidden',String(i!==photo)));
+      const label=`${photo+1} / ${count()}`;
+      if(countLabel.textContent!==label)countLabel.textContent=label;
+      dots.forEach((dot,i)=>{dot.hidden=i>=count();dot.setAttribute('aria-pressed',String(i===photo));});
+      warm(index);
+    }
+    function schedule(){if(!queued){queued=true;requestAnimationFrame(update);}}
+    function resizeStory(){
+      const timing=timeline();
+      const last=timing[count()-1];
+      story!.style.setProperty('--story-screens',String(last.start+last.hold+1));
+      update();
+    }
+    function goPhoto(index:number){
+      const target=Math.max(0,Math.min(count()-1,index));
+      warm(target);
+      // Jump to this scene's starting state without passing through other photos.
+      window.scrollTo({top:window.scrollY+story!.getBoundingClientRect().top+timeline()[target].start*stage.offsetHeight+.5,behavior:'instant'});
+      update();
+    }
+    dots.forEach(button=>button.addEventListener('click',()=>goPhoto(Number(button.dataset.photo))));
+    document.querySelectorAll<HTMLButtonElement>('[data-select-project]').forEach(button=>button.addEventListener('click',()=>{
+      const index=Number(button.dataset.selectProject);
+      if(!projects[index])return;
+      project=index;
+      strips.forEach((strip,i)=>strip.hidden=i!==project);
+      resizeStory();goPhoto(0);dots[0].focus({preventScroll:true});
+    }));
+    story.addEventListener('keydown',event=>{
+      if(event.altKey||event.ctrlKey||event.metaKey)return;
+      if(event.key==='ArrowRight'){event.preventDefault();goPhoto(photo+1);}
+      if(event.key==='ArrowLeft'){event.preventDefault();goPhoto(photo-1);}
+    });
+    let touchX=0,touchY=0;
+    stage.addEventListener('touchstart',event=>{touchX=event.changedTouches[0].clientX;touchY=event.changedTouches[0].clientY;},{passive:true});
+    stage.addEventListener('touchend',event=>{
+      const dx=event.changedTouches[0].clientX-touchX,dy=event.changedTouches[0].clientY-touchY;
+      if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)goPhoto(photo+(dx<0?1:-1));
+    },{passive:true});
+    window.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('resize',schedule);
+    reduced.addEventListener('change',schedule);
+    resizeStory();
+  }
+</script>

@@ -47,8 +47,14 @@ npm run check
 
 ## 배포
 
-정적 사이트를 지원하는 일반 웹호스팅, 사내 서버, Netlify, Vercel, Cloudflare Pages 등에 `dist` 폴더의 내용을 배포할 수 있습니다.
+GitHub Actions의 `Deploy to Firebase Hosting` 워크플로가 빌드한 `dist/`를 Firebase 프로젝트 `officehive`에 배포합니다.
+
+- `main`에 push하면 운영 사이트 `https://officehive.web.app/`가 갱신됩니다.
+- 수동 실행의 `channel`을 `client-review`로 선택하면 운영 화면을 유지하고 30일 유효한 검토용 주소를 생성·갱신합니다. `live`는 운영 배포입니다.
+- 의뢰인에게는 배포 결과 주소 뒤에 `/compare/a/`를 붙여 공유합니다. 화면 아래 A·B·C·D 버튼으로 현재 화면과 세 가지 시안을 비교할 수 있습니다.
+- 검토용으로만 올릴 때는 커밋 메시지에 `[skip ci]`를 넣어 push 자동 운영 배포를 생략한 후, 수동으로 `client-review`를 실행합니다.
+- 배포 인증과 API 주소는 GitHub의 `prod` 환경에 설정돼 있습니다. 이 환경은 `main` 브랜치만 허용합니다.
 
 ## 필수 확인
 
-현재 상담신청 폼은 화면 시연용이며 실제 문의를 전송하거나 저장하지 않습니다. 운영 전 이메일, CRM, 데이터베이스 또는 폼 서비스와 연결해야 합니다.
+상담신청 폼은 빌드 환경의 `PUBLIC_VITASPACE_API_URL` 아래 `/api/vitaspace`로 전송합니다. 배포 시 GitHub `prod` 환경의 값을 사용하며, 로컬 기본 주소는 `http://localhost:3000`입니다. 검토용 주소에서 실제 접수를 운영하려면 API의 CORS 허용과 수신 결과를 별도로 확인해야 합니다.

@@ -1,0 +1,124 @@
+<header class="grid-header">
+  <div class="grid-frame grid-header-inner">
+    <a class="grid-wordmark" href="/" aria-label="비타스페이스 홈">VITASPACE</a>
+    <details class="grid-menu">
+      <summary aria-label="전체 메뉴">
+        <span class="grid-menu-label">MENU</span>
+        <span class="grid-menu-icon" aria-hidden="true"></span>
+      </summary>
+      <nav class="grid-menu-links" aria-label="주 메뉴">
+        <a href="/process/">진행방식 <span aria-hidden="true">↗</span></a>
+        <a href="/projects/">납품사례 <span aria-hidden="true">↗</span></a>
+        <a href="/about/">회사소개 <span aria-hidden="true">↗</span></a>
+        <a href="/brands/">취급브랜드 <span aria-hidden="true">↗</span></a>
+        <a href="/contact/">상담신청 <span aria-hidden="true">↗</span></a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('.grid-menu');
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu?.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) {
+      menu.open = false;
+    }
+  });
+</script>
+
+<style>
+  .grid-header {
+    position: relative;
+    inset: auto;
+    z-index: 100;
+    background: var(--grid-paper);
+    color: var(--grid-ink);
+    border-bottom: 1px solid var(--grid-line);
+  }
+
+  .grid-header-inner {
+    display: grid;
+    grid-template-columns: var(--grid-division) 1fr;
+    min-height: 98px;
+  }
+
+  .grid-wordmark {
+    display: flex;
+    align-items: center;
+    padding: 12px var(--grid-inset);
+    font: 700 clamp(28px, 3.3vw, 52px)/1 Arial, sans-serif;
+    letter-spacing: -.065em;
+  }
+
+  .grid-menu { border-left: 1px solid var(--grid-line); }
+
+  summary {
+    min-height: 98px;
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+  .grid-menu-label { font: 400 12px/1 Arial, sans-serif; letter-spacing: .04em; }
+
+  .grid-menu-icon {
+    position: relative;
+    display: block;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .grid-menu-icon::before, .grid-menu-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--grid-ink);
+  }
+
+  .grid-menu-icon::before { width: 36px; height: 1px; left: 0; top: 17px; }
+  .grid-menu-icon::after { width: 1px; height: 36px; left: 17px; top: 0; }
+  details[open] .grid-menu-icon { transform: rotate(45deg); }
+
+  .grid-menu-links {
+    position: absolute;
+    top: 100%;
+    right: var(--grid-gutter);
+    width: min(440px, calc(100% - 2 * var(--grid-gutter)));
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--grid-paper);
+    border: 1px solid var(--grid-line);
+  }
+
+  .grid-menu-links a {
+    display: flex;
+    justify-content: space-between;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--grid-line);
+    font-size: 20px;
+  }
+
+  .grid-menu-links a:last-child { border-bottom: 0; }
+  .grid-menu-links a:hover { background: var(--grid-ink); color: var(--grid-paper); }
+
+  @media (max-width: 700px) {
+    .grid-header-inner, summary { min-height: 76px; }
+    summary { justify-content: center; padding: 12px; }
+    .grid-menu-label { display: none; }
+    .grid-menu-icon { transform: scale(.75); }
+    details[open] .grid-menu-icon { transform: scale(.75) rotate(45deg); }
+  }
+</style>

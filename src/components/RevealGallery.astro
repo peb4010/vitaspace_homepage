@@ -1,0 +1,63 @@
+---
+import projects from '../data/delivery-projects.json';
+const photos = projects[0].images;
+const coveredColumns = [1, 0, 2, 1, 2, 0];
+---
+
+<div class="reveal-gallery" aria-label="공간 사진 감상">
+  <div class="reveal-navigation">
+    <a class="reveal-brand" href="/" aria-label="비타스페이스 홈">VITASPACE</a>
+  </div>
+  {photos.map((src,index)=>(
+    <section class="reveal-scene" id={`space-${index+1}`} aria-label={`공간 사진 ${index+1}`}>
+      <div class="reveal-stage">
+        <img src={src} alt={`삼동플러스 납품 현장 사진 ${index+1}`} width="1920" height="1280" loading={index<2?'eager':'lazy'} decoding="async" />
+        <div class="reveal-cover" style={`--column:${coveredColumns[index]}`} aria-hidden="true"></div>
+      </div>
+    </section>
+  ))}
+</div>
+
+<style>
+  .reveal-gallery{position:relative;background:#fff}
+  .reveal-navigation{position:sticky;top:0;height:0;z-index:5;mix-blend-mode:difference;color:#fff}
+  .reveal-brand{color:#fff;position:absolute;top:24px;left:30px;font:600 28px/1 Arial,sans-serif;letter-spacing:-.06em}
+  .reveal-brand:focus-visible{outline:2px solid currentColor;outline-offset:6px}
+  .reveal-scene{position:relative;height:170svh;--cover-opacity:1}
+  .reveal-stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#e5e4de}
+  .reveal-stage img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+  .reveal-cover{position:absolute;inset:0 auto 0 calc(var(--column)*100%/3);width:calc(100%/3 + 1px);background:#fff;opacity:var(--cover-opacity);pointer-events:none}
+  @media(max-width:760px){
+    .reveal-brand{top:18px;left:20px;font-size:20px}
+    .reveal-scene{height:150svh}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .reveal-scene{height:100svh}
+    .reveal-cover{display:none}
+  }
+</style>
+
+<script>
+  const gallery=document.querySelector<HTMLElement>('.reveal-gallery');
+  if(gallery){
+    const scenes=Array.from(gallery.querySelectorAll<HTMLElement>('.reveal-scene'));
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+    let scheduled=false;
+    function update(){
+      scheduled=false;
+      scenes.forEach(scene=>{
+        const stage=scene.querySelector<HTMLElement>('.reveal-stage')!;
+        const rect=scene.getBoundingClientRect();
+        const progress=Math.max(0,Math.min(1,-rect.top/Math.max(1,scene.offsetHeight-stage.offsetHeight)));
+        const reveal=Math.max(0,Math.min(1,(progress-.08)/.62));
+        const eased=reveal*reveal*(3-2*reveal);
+        scene.style.setProperty('--cover-opacity',String(reduced.matches?0:1-eased));
+      });
+    }
+    function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(update);}}
+    window.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('resize',schedule);
+    reduced.addEventListener('change',schedule);
+    update();
+  }
+</script>

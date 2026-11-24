@@ -1,0 +1,72 @@
+[
+  {
+    "slug": "samdong",
+    "name": "삼동플러스",
+    "images": [
+      "/media/delivery/samdong-1.jpg",
+      "/media/delivery/samdong-2.jpg",
+      "/media/delivery/samdong-3.jpg",
+      "/media/delivery/samdong-4.jpg",
+      "/media/delivery/samdong-5.jpg",
+      "/media/delivery/samdong-6.jpg"
+    ]
+  },
+  {
+    "slug": "kudo",
+    "name": "쿠도커뮤니케이션",
+    "images": [
+      "/media/delivery/kudo-1.jpg",
+      "/media/delivery/kudo-2.jpg",
+      "/media/delivery/kudo-3.jpg",
+      "/media/delivery/kudo-4.jpg",
+      "/media/delivery/kudo-5.jpg",
+      "/media/delivery/kudo-6.jpg"
+    ]
+  },
+  {
+    "slug": "absolver",
+    "name": "앱솔브랩",
+    "images": [
+      "/media/delivery/absolver-1.jpg",
+      "/media/delivery/absolver-2.jpg",
+      "/media/delivery/absolver-3.jpg",
+      "/media/delivery/absolver-4.jpg",
+      "/media/delivery/absolver-5.jpg",
+      "/media/delivery/absolver-6.jpg"
+    ]
+  },
+  {
+    "slug": "yesasia",
+    "name": "예스아시아닷컴",
+    "images": [
+      "/media/delivery/yesasia-1.jpg",
+      "/media/delivery/yesasia-2.jpg",
+      "/media/delivery/yesasia-3.jpg",
+      "/media/delivery/yesasia-4.jpg",
+      "/media/delivery/yesasia-5.jpg",
+      "/media/delivery/yesasia-6.jpg"
+    ]
+  },
+  {
+    "slug": "lt",
+    "name": "엘티그룹",
+    "images": [
+      "/media/delivery/lt-1.jpg",
+      "/media/delivery/lt-2.jpg",
+      "/media/delivery/lt-3.jpg",
+      "/media/delivery/lt-4.jpg"
+    ]
+  },
+  {
+    "slug": "hyperlounge",
+    "name": "하이퍼라운지",
+    "images": [
+      "/media/delivery/hyperlounge-1.jpg",
+      "/media/delivery/hyperlounge-2.jpg",
+      "/media/delivery/hyperlounge-3.jpg",
+      "/media/delivery/hyperlounge-4.jpg",
+      "/media/delivery/hyperlounge-5.jpg",
+      "/media/delivery/hyperlounge-6.jpg"
+    ]
+  }
+]
