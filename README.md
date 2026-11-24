@@ -51,7 +51,7 @@ GitHub Actions의 `Deploy to Firebase Hosting` 워크플로가 빌드한 `dist/`
 
 - `main`에 push하면 운영 사이트 `https://officehive.web.app/`가 갱신됩니다.
 - 수동 실행의 `channel`을 `client-review`로 선택하면 운영 화면을 유지하고 30일 유효한 검토용 주소를 생성·갱신합니다. `live`는 운영 배포입니다.
-- 의뢰인에게는 배포 결과 주소 뒤에 `/compare/a/`를 붙여 공유합니다. 화면 아래 A·B·C·D 버튼으로 현재 화면과 세 가지 시안을 비교할 수 있습니다.
+- 의뢰인에게는 배포 결과 주소 뒤에 `/compare/a/`를 붙여 공유합니다. 화면 아래 A·B·C 버튼으로 실용형·흐름형·강조형 시안을 비교할 수 있습니다. 원본 홈페이지는 `/`에 유지됩니다.
 - 검토용으로만 올릴 때는 커밋 메시지에 `[skip ci]`를 넣어 push 자동 운영 배포를 생략한 후, 수동으로 `client-review`를 실행합니다.
 - 배포 인증과 API 주소는 GitHub의 `prod` 환경에 설정돼 있습니다. 이 환경은 `main` 브랜치만 허용합니다.
 

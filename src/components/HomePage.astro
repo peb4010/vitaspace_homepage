@@ -25,7 +25,7 @@ const { focused = false, preview = false, editorial = false, grid = false, cinem
 const description = '공간 분석과 3D 제안부터 규격 검토, 납품·설치까지. 비타스페이스가 기관의 목적과 예산에 맞는 사무환경을 설계합니다.';
 ---
 
-<BaseLayout title={word ? 'VITASPACE — 사진과 타이포그래피 | D안' : preview && !focused && !editorial && !grid && !cinematic ? 'VITASPACE — 현재 사이트 | A안' : undefined} variant="home" grid={grid} cinematic={cinematic} bodyClass={word ? 'home-cinematic home-word' : cinematic ? 'home-cinematic' : grid ? 'home-grid' : editorial ? 'home-editorial' : undefined} robots={preview ? 'noindex, nofollow' : undefined}>
+<BaseLayout title={word ? 'VITASPACE — 사진과 타이포그래피 | C안' : preview && !focused && !editorial && !grid && !cinematic ? 'VITASPACE — 현재 사이트' : undefined} variant="home" grid={grid} cinematic={cinematic} bodyClass={word ? 'home-cinematic home-word' : cinematic ? 'home-cinematic' : grid ? 'home-grid' : editorial ? 'home-editorial' : undefined} robots={preview ? 'noindex, nofollow' : undefined}>
   {cinematic ? (word ? <WordHero /> : neighbor ? <NeighborHero /> : <CinematicHero />) : grid ? <GridHero /> : editorial ? <EditorialHero /> : (
   <section class:list={['hero', focused && 'hero-focused']}>
     <div class="wrap hero-content">

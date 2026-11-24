@@ -22,12 +22,12 @@ const services = [
     <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="description" content="가구와 공간, 그리고 사람. 비타스페이스가 만드는 일터를 만나보세요." />
-    <title>VITASPACE — 사진과 공간의 흐름 | C안</title>
+    <title>VITASPACE — 사진과 공간의 흐름 | B안</title>
   </head>
   <body class="flow-page">
     <a class="skip" href="#flow-main">본문 바로가기</a>
     <header class="flow-header" data-tone="photo">
-      <a class="logo" href="/compare/c/" aria-label="비타스페이스 C안 홈">vitaspace.</a>
+      <a class="logo" href="/compare/b/" aria-label="비타스페이스 B안 홈">vitaspace.</a>
       <nav aria-label="주요 메뉴"><a href="#flow-works">공간 사례</a><a href="#flow-services">서비스</a><a href="#flow-process">진행 과정</a><a href="#flow-contact">상담 문의 <span aria-hidden="true">↗</span></a></nav>
       <details class="mobile-menu"><summary>메뉴 <span aria-hidden="true">+</span></summary><div><a href="#flow-works">공간 사례</a><a href="#flow-services">서비스</a><a href="#flow-process">진행 과정</a><a href="#flow-contact">상담 문의 ↗</a></div></details>
     </header>
@@ -65,9 +65,9 @@ const services = [
       <ProjectSteps id="flow-process" showLink={false} />
       <section class="flow-contact content-section" id="flow-contact"><div><p class="eyebrow">LET’S TALK</p><h2>다음 공간의 이야기를<br />들려주세요.</h2><p class="contact-description">도면이 없어도 괜찮습니다.<br />예상 인원과 공간 규모, 희망 일정부터<br />함께 정리합니다.</p></div><div class="contact-panel"><h3>프로젝트 상담</h3><ContactForm variant="home" className="flow-form" /></div></section>
     </main>
-    <footer class="flow-footer"><a href="/compare/c/" class="logo">vitaspace.</a><p>가구와 공간, 그리고 사람을 잇습니다.</p><a href="/about/">비타스페이스 소개 ↗</a><small>© VITASPACE</small></footer>
+    <footer class="flow-footer"><a href="/compare/b/" class="logo">vitaspace.</a><p>가구와 공간, 그리고 사람을 잇습니다.</p><a href="/about/">비타스페이스 소개 ↗</a><small>© VITASPACE</small></footer>
     <dialog class="flow-dialog" aria-label="공간 사진 크게 보기"><button aria-label="사진 닫기">닫기 ×</button><img src={photos[0].src} alt="" /><p></p></dialog>
-    <aside class="compare" aria-label="시안 비교">{comparisonVersions.map((item) => <a href={`/compare/${item.id}/`} aria-current={item.id === 'c' ? 'page' : undefined}>{item.label}</a>)}</aside>
+    <aside class="compare" aria-label="시안 비교">{comparisonVersions.map((item) => <a href={`/compare/${item.id}/`} aria-current={item.id === 'b' ? 'page' : undefined}>{item.label}</a>)}</aside>
   </body>
 </html>
 

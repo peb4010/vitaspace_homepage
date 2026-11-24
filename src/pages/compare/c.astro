@@ -1,5 +1,53 @@
 ---
-import FlowHome from '../../components/FlowHome.astro';
+import HomePage from '../../components/HomePage.astro';
+import { comparisonVersions } from '../../data/comparison';
 ---
 
-<FlowHome />
+<HomePage cinematic word preview>
+  <aside aria-label="첫 화면 시안 비교">
+    {comparisonVersions.map((item) => <a href={`/compare/${item.id}/`} aria-current={item.id === 'c' ? 'page' : undefined}>{item.label}</a>)}
+  </aside>
+</HomePage>
+
+<style>
+  aside {
+    position: fixed;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    right: max(16px, env(safe-area-inset-right));
+    max-width: calc(100vw - 24px);
+    overflow-x: auto;
+    z-index: 101;
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    border: 1px solid #d0d0d0;
+    border-radius: 32px;
+    background: white;
+    color: #171717;
+    box-shadow: 0 3px 16px #10171824;
+  }
+
+  aside a {
+    display: grid;
+    place-items: center;
+    min-height: 40px;
+    white-space: nowrap;
+    padding: 0 16px;
+    border-radius: 24px;
+    font: 600 14px/1.2 system-ui, sans-serif;
+  }
+
+  aside a[aria-current] {
+    background: #171717;
+    color: white;
+  }
+  @media (max-width: 640px) {
+    aside {
+      bottom: calc(68px + env(safe-area-inset-bottom));
+    }
+    aside a {
+      padding: 0 10px;
+      font-size: 12px;
+    }
+  }
+</style>

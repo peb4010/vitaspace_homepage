@@ -1,7 +1,6 @@
-// Canonical routes for the current site and three combined design proposals.
+// Three combined design proposals. The original homepage remains at /.
 export const comparisonVersions = [
-  { id: 'a', label: 'A · 현재' },
-  { id: 'b', label: 'B · 실용형' },
-  { id: 'c', label: 'C · 흐름형' },
-  { id: 'd', label: 'D · 강조형' },
+  { id: 'a', label: 'A · 실용형' },
+  { id: 'b', label: 'B · 흐름형' },
+  { id: 'c', label: 'C · 강조형' },
 ];
